@@ -5,7 +5,10 @@ if (!isset($_GET["token"])) {
 }
 
 $users = array(
-	"JKi7IbcSBQmA71jB" => "sebastian.lemerdy@gmail.com",
+	"JKi7IbcSBQmA71jB" => array(
+		email => "sebastian.lemerdy@gmail.com",
+		lien_maries => "Frère de Laurent",
+	),
 );
 
 if (!array_key_exists($_GET["token"], $users)) {
@@ -16,4 +19,5 @@ function unauthorize() {
 	header("HTTP/1.1 401 Unauthorized");
 	die("Unauthorized");
 }
+
 ?>
