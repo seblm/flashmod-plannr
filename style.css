@@ -22,6 +22,7 @@ h1, h2, h3 {
 
 h1 {
 	font-size: 2em;
+	color: #FFFFFF;
 }
 
 h2 {
@@ -195,7 +196,7 @@ a:hover {
 	text-transform: uppercase;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 14px;
-	font-weight: bold;
+	font-weight: normal;
 	color: #FFFFFF;
 	border: none;
 }
@@ -205,6 +206,7 @@ a:hover {
 }
 
 #menu .current_page_item a {
+	font-weight: bold;
 }
 
 /* Background */

@@ -1,3 +1,4 @@
+<?php require_once("init.php"); ?>
 <!DOCTYPE html>
 <html id="home" lang="fr">
 <head>
@@ -11,20 +12,20 @@
 <div id="header" class="container">
 <header id="logo"><h1><a href="http://fr.wikipedia.org/wiki/Flash_mob">Flashmob</a> mariage</h1></header>
 </div>
-<menu id="menu">
+<div id="menu">
  <ul>
   <li class="current_page_item"><a href="#">Présentation</a></li>
-  <li><a href="#">Répartition</a></li>
-  <li><a href="#">Entraînement</a></li>
+  <li><a href="repartition.php?token=<?php echo($_GET["token"]); ?>">Répartition</a></li>
+  <li><a href="training.php?token=<?php echo($_GET["token"]); ?>">Entraînement</a></li>
  </ul>
-</menu>
+</div>
 <article>
 <div id="splash"><img src="images/splash.jpg" width="800" height="250" alt="" /></div>
 <div id="page">
  <div id="box1">
   <p>Cette page web doit absolument rester secrète : <strong>ne surtout pas la communiquer ni à Camille, ni à Laurent !</strong></p>
   <p>Le but est de vous permettre de vous entraîner sur la chorégraphie de <em>LMFAO - Party Rock Anthem (feat. Lauren
-  Bennet & GoonRock)</em>. Elle est extraite du jeu vidéo
+  Bennet &amp; GoonRock)</em>. Elle est extraite du jeu vidéo
   <a href="http://just-dance-thegame.ubi.com/just-dance-3/fr-fr/home/index.aspx">Just Dance 3</a> sur
   <a href="http://www.nintendo.fr/NOE/fr_FR/wii_54.html">Wii</a>.</p>
   <p>Le principe du <a href="http://fr.wikipedia.org/wiki/Flash_mob">Flashmob</a> est qu'il y ait de plus en plus de
