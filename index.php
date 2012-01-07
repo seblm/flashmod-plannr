@@ -2,11 +2,11 @@
 
 require_once("init.php");
 
-${title} = "Présentation";
+$smarty->assign("title", "Présentation");
 
-${currentPage} = "index";
+$smarty->assign("currentPage", "index");
 
-${content} = "
+$smarty->assign("content", "
 <p>Cette page web doit absolument rester secrète : <strong>ne surtout pas la communiquer ni à Camille, ni à Laurent !</strong></p>
 <p>Le but est de vous permettre de vous entraîner sur la chorégraphie de <em>LMFAO - Party Rock Anthem (feat. Lauren
 Bennet &amp; GoonRock)</em>. Elle est extraite du jeu vidéo
@@ -17,8 +17,8 @@ commencent à danser sur une chorégraphie. Cela crée une première surprise po
 par vagues à des moments précis. La surprise continue donc par l'effet de masse.</p>
 <p><strong>Avantage</strong> : les danseurs les
 moins chevronnés pourront choisir de rejoindre le mouvement vers la fin afin de danser pendant une plus courte durée !</p>
-";
+");
 
-require_once("template.php");
+$smarty->display("template.tpl");
 
 ?>

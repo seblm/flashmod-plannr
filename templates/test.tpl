@@ -1,0 +1,1 @@
+Bonjour, {$name}, Bienvenue dans Smarty !

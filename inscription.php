@@ -2,11 +2,11 @@
 
 require_once("init.php");
 
-${title} = "Inscription &amp; entraînement";
+$smarty->assign("title", "Inscription &amp; entraînement");
 
-	${currentPage} = "inscription";
+$smarty->assign("currentPage", "inscription");
 
-	${content} = "
+$smarty->assign("content", "
 <p>Voici le <em>timing</em> de chaque vague : cliquez sur les boutons <em>S'inscrire/Se désinscrire</em> pour changer de vague.</p>
 <p>Vous pouvez vous <strong>entraîner</strong> en fonction de la vague que vous avez choisi.</p>
 <table>
@@ -81,8 +81,8 @@ ${title} = "Inscription &amp; entraînement";
   02:10 And we gon' make You loose yo mind<br>
   02:14 We just wanna See ya<br>
   02:17 Shake that
-";
+");
 	
-require_once("template.php");
+$smarty->display("template.tpl");
 
 ?>
