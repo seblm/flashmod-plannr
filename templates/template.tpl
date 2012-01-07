@@ -6,7 +6,7 @@
 <link href="style.css" rel="stylesheet" type="text/css" media="screen" />
 <title>Flashmob pour le mariage de Camille &amp; Laurent - {$title}</title>
 </head>
-<body>
+<body{if $currentPage != 'index'} class="body2"{/if}>
 <section>
 <div id="header" class="container">
 <header id="logo"><h1><a href="http://fr.wikipedia.org/wiki/Flash_mob">Flashmob</a> mariage</h1></header>
@@ -23,7 +23,7 @@
 {if $currentPage == 'index' }<div id="splash"><img src="images/splash.jpg" width="800" height="250" alt="" /></div>{/if}
 <div id="page">
 <div id="box1">
-{$content}
+{include file="$currentPage.tpl"}
 </div>
 </div>
 </article>

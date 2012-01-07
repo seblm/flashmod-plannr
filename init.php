@@ -12,8 +12,8 @@ if (!isset($_GET["token"])) {
 $users = array(
 	"JKi7IbcSBQmA71jB" => array(
 		"email" => "sebastian.lemerdy@gmail.com",
-		"lien_maries" => "Frère de Laurent",
-		"nom" => "Sébastian,"
+		"wedding_link" => "Frère de Laurent",
+		"name" => "Sébastian"
 	),
 );
 
@@ -26,5 +26,7 @@ date_default_timezone_set("Europe/Paris");
 require_once("lib/Smarty-2.6.26/Smarty.class.php");
 
 $smarty = new Smarty();
+
+$smarty->assign("user", $users[$_GET["token"]]);
 
 ?>
