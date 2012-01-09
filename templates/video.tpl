@@ -1,2 +1,3 @@
 <p>Voici la chorégraphie <strong>entière</strong>. Pour participer au Flashmob, pensez à vous <a href="inscription.php?token={$smarty.get.token}">inscrire puis à vous entraîner</a> <strong>à partir de votre vague</strong>.</p>
+<p><a href="inscription.php?token={$smarty.get.token}"><button class="css3button" type="button">S'inscrire</button></a></p>
 <iframe width="640" height="360" src="http://www.youtube.com/embed/b4kXbdK9O3Y?rel=0" frameborder="0" allowfullscreen></iframe>
