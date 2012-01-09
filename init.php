@@ -1,23 +1,15 @@
 <?php
 
+require_once("classes/User.php");
+
 function unauthorize() {
 	header("HTTP/1.1 401 Unauthorized");
 	die("Unauthorized");
 }
 
-if (!isset($_GET["token"])) {
-	unauthorize();
-}
+$user = new User($_GET);
 
-$users = array(
-	"JKi7IbcSBQmA71jB" => array(
-		"email" => "sebastian.lemerdy@gmail.com",
-		"wedding_link" => "Frère de Laurent",
-		"name" => "Sébastian"
-	),
-);
-
-if (!array_key_exists($_GET["token"], $users)) {
+if (!$user->checkUser()) {
 	unauthorize();
 }
 
@@ -27,6 +19,6 @@ require_once("lib/Smarty-2.6.26/Smarty.class.php");
 
 $smarty = new Smarty();
 
-$smarty->assign("user", $users[$_GET["token"]]);
+$smarty->assign("user", $user->getUser());
 
 ?>
