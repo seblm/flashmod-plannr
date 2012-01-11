@@ -7,9 +7,9 @@ function unauthorize() {
 	die("Unauthorized");
 }
 
-$user = new User($_GET);
-
-if (!$user->checkUser()) {
+try {
+	$user = new User($_GET);
+} catch (InvalidArguementException $e) {
 	unauthorize();
 }
 
