@@ -8,7 +8,16 @@ class UserTest extends PHPUnit_Framework_TestCase {
 	private $users;
 	
 	public function setUp() {
+		if (!defined("TEST")) {
+			define("TEST", true);
+		}
 		$this->users = new Users();
+	}
+	
+	public function tearDown() {
+		if (is_file("users-test")) {
+			unlink("users-test");
+		}
 	}
 	
     /**

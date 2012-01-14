@@ -9,17 +9,12 @@ class Users {
 		"laurentlemerdy@hotmail.com",
 		"camille_preco@hotmail.com",
 	);
+	private static $ADMIN_TOKEN = "JKi7IbcSBQmA71jB";
 	
 	private $users;
 
 	public function Users() {
-		$this->users = array(
-			"JKi7IbcSBQmA71jB" => new User(
-					"sebastian.lemerdy@gmail.com",
-					"Frère de Laurent",
-					"Sébastian"
-			),
-		);
+		$this->loadUsers();
 	}
 	
 	public function retrieveUser($urlParameters) {
@@ -38,9 +33,38 @@ class Users {
 		return $token;
 	}
 	
+	public function deleteUser($urlParameters) {
+		$this->checkUrlParameters($urlParameters);
+		if ($urlParameters["token"] == Users::$ADMIN_TOKEN) {
+			throw new InvalidArgumentException("Can't delete admin user");
+		}
+		$deletedUser = $this->users[$urlParameters["token"]];
+		unset($this->users[$urlParameters["token"]]);
+		return $deletedUser;
+	}
+	
 	public function checkNewEmail($email) {
 		$this->checkEmailForbidden($email);
 		$this->checkExistingUser($email);
+	}
+	
+	public function saveUsers() {
+		$serialized = serialize($this->users);
+		$handle = Users::openFile(false);
+		fwrite($handle, $serialized);
+		fclose($handle);
+	}
+	
+	private function loadUsers() {
+		if (is_file(Users::getFileName())) {
+			$handle = Users::openFile();
+			$serialized = fread($handle, 100000);
+			fclose($handle);
+			$this->users = unserialize($serialized);
+		} else {
+			$this->users = array(Users::$ADMIN_TOKEN => new User("sebastian.lemerdy@gmail.com", "Frère de Laurent", "Sébastian"));
+			$this->saveUsers();
+		}
 	}
 	
 	private function checkEmailForbidden($email) {
@@ -76,6 +100,20 @@ class Users {
 	
 	private function generatesToken() {
 		return substr(str_shuffle(str_repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789", 16)), 0, 16);
+	}
+	
+	private static function openFile($readOnly = true) {
+		if ($readOnly) {
+			return fopen(Users::getFileName(), "r");
+		}
+		return fopen(Users::getFileName(), "w");
+	}
+	
+	private static function getFileName() {
+		if (defined("TEST")) {
+			return "users-test";
+		}
+		return "users";
 	}
 	
 }
