@@ -1,7 +1,7 @@
 <?php
 
-require_once("User.php");
-require_once("Users.php");
+require_once("classes/User.php");
+require_once("classes/Users.php");
 
 class UsersTest extends PHPUnit_Framework_TestCase {
 	
