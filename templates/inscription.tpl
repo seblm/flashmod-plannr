@@ -1,6 +1,6 @@
-<span class="field">nom, prénom ou pseudo</span> <input type="text" value="{$user.name}"><br>
-<span class="field">adresse email</span> <input type="text" value="{$user.email}" readonly="readonly"><br>
-<span class="field">lien avec les mariés</span> <input type="text" value="{$user.wedding_link}"><br>
+<span class="field">nom, prénom ou pseudo</span> <input type="text" value="{user->getName}"><br>
+<span class="field">adresse email</span> <input type="text" value="{user->getEmail}" readonly="readonly"><br>
+<span class="field">lien avec les mariés</span> <input type="text" value="{user->getWeddingLink}"><br>
 <span class="field">&nbsp;</span> <input type="button" value="Mettre à jour mes informations"><br>
 <p></p>
 <p>Voici le <em>timing</em> de chaque vague : cliquez sur les boutons <em>S'inscrire/Se désinscrire</em> pour changer de vague.</p>

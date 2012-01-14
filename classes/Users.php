@@ -1,5 +1,7 @@
 <?php
 
+require_once("User.php");
+
 class Users {
 	
 	private static $FORBIDDEN_EMAILS = array(
@@ -21,17 +23,19 @@ class Users {
 	}
 	
 	public function retrieveUser($urlParameters) {
-		if (!array_key_exists("token", $urlParameters) || strlen($urlParameters["token"]) != 16) {
-			throw new InvalidArgumentException("Bad token");
-		}
-		if (!array_key_exists($urlParameters["token"], $this->users)) {
-			throw new InvalidArgumentException("User doesn't exists");
-		}
+		$this->checkUrlParameters($urlParameters);
 		return $this->users[$urlParameters["token"]];
 	}
 	
 	public function createUser($email, $weddingLink, $name) {
-		$user = new User($email, $weddingLink, $name, array($this, "checkNewEmail"));
+		$token = $this->generatesToken();
+		if ($this->users != null) {
+			while (array_key_exists($token, $this->users)) {
+				$token = $this->generatesToken();
+			}
+		}
+		$this->users[$token] = new User($email, $weddingLink, $name, array($this, "checkNewEmail"));
+		return $token;
 	}
 	
 	public function checkNewEmail($email) {
@@ -47,13 +51,31 @@ class Users {
 	
 	private function checkExistingUser($email) {
 		if ($this->users !== null && !empty($this->users)) {
-			foreach ($this->users as $token => $user) {
-				$userValues = $user->getUser();
-				if ($userValues[User::EMAIL] == $email) {
-					throw new InvalidArgumentException("Email already exists");
-				}
+			if ($this->getUserByEmail($email) !== null) {
+				throw new InvalidArgumentException("Email already exists");
 			}
 		}	
+	}
+	
+	private function checkUrlParameters($urlParameters) {
+		if (!array_key_exists("token", $urlParameters) || strlen($urlParameters["token"]) != 16) {
+			throw new InvalidArgumentException("Bad token");
+		}
+		if (!array_key_exists($urlParameters["token"], $this->users)) {
+			throw new InvalidArgumentException("User doesn't exists");
+		}
+	}
+	
+	private function getUserByEmail($email) {
+		foreach ($this->users as $token => $user) {
+			if ($user->getEmail() == $email) {
+				return $user;
+			}
+		}
+	}
+	
+	private function generatesToken() {
+		return substr(str_shuffle(str_repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789", 16)), 0, 16);
 	}
 	
 }

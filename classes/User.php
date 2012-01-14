@@ -18,13 +18,8 @@ class User {
 		$this->setName($name);
 	}
 	
-	public function getUser() {
-		return array(
-			User::EMAIL => $this->email,
-			User::WEDDING_LINK => $this->weddingLink,
-			User::NAME => $this->name,
-			User::WAVE => $this->wave,
-		);
+	public function getWeddingLink() {
+		return $this->weddingLink;
 	}
 	
 	public function setWeddingLink($weddingLink) {
@@ -33,10 +28,18 @@ class User {
 		return $this;
 	}
 
+	public function getName() {
+		return $this->name;
+	}
+	
 	public function setName($name) {
 		$this->check($name, User::NAME);
 		$this->name = $name;
 		return $this;
+	}
+	
+	public function getWave() {
+		return $this->wave;
 	}
 
 	public function setWave($wave) {
@@ -45,6 +48,10 @@ class User {
 		}
 		$this->wave = $wave;
 		return $this;
+	}
+	
+	public function getEmail() {
+		return $this->email;
 	}
 	
 	private function setEmail($email, $checkExistingUserCallback) {

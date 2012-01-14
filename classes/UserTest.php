@@ -53,11 +53,10 @@ class UserTest extends PHPUnit_Framework_TestCase {
     public function update_infos() {
     	$user = new User("sebastian.lemerdy@gmail.com", "Frère de Laurent", "Sébastian");
     	$user->setWeddingLink("Groom's big brother")->setName("Sébas.")->setWave(1);
-        $user = $user->getUser();
-        $this->assertEquals($user[User::EMAIL], "sebastian.lemerdy@gmail.com");
-        $this->assertEquals($user[User::WEDDING_LINK], "Groom's big brother");
-        $this->assertEquals($user[User::NAME], "Sébas.");
-        $this->assertEquals($user[User::WAVE], 1);
+        $this->assertEquals($user->getEmail(), "sebastian.lemerdy@gmail.com");
+        $this->assertEquals($user->getWeddingLink(), "Groom's big brother");
+        $this->assertEquals($user->getName(), "Sébas.");
+        $this->assertEquals($user->getWave(), 1);
     }
     
 }

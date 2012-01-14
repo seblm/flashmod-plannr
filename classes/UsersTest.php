@@ -35,11 +35,10 @@ class UsersTest extends PHPUnit_Framework_TestCase {
 	public function should_retrieve_existing_user() {
 		$user = $this->users->retrieveUser(array("token" => "JKi7IbcSBQmA71jB"));
 		$this->assertNotNull($user);
-		$user = $user->getUser();
-		$this->assertEquals($user[User::EMAIL], "sebastian.lemerdy@gmail.com");
-		$this->assertEquals($user[User::WEDDING_LINK], "Frère de Laurent");
-		$this->assertEquals($user[User::NAME], "Sébastian");
-		$this->assertNull($user[User::WAVE]);
+		$this->assertEquals($user->getEmail(), "sebastian.lemerdy@gmail.com");
+		$this->assertEquals($user->getWeddingLink(), "Frère de Laurent");
+		$this->assertEquals($user->getName(), "Sébastian");
+		$this->assertNull($user->getWave());
 	}
 	
 	/**
@@ -48,7 +47,7 @@ class UsersTest extends PHPUnit_Framework_TestCase {
 	 * @expectedExceptionMessage Email already exists
 	 */
 	public function cant_creates_new_user_with_existing_email() {
-		$this->users->createUser("sebastian.lemerdy@gmail.com", "wedding_link", "name");
+		$this->users->createUser("sebastian.lemerdy@gmail.com", "Groom's broher", "Sébastian");
 	}
 	
     /**
@@ -57,7 +56,7 @@ class UsersTest extends PHPUnit_Framework_TestCase {
      * @expectedExceptionMessage Email is forbidden
      */
     public function cant_creates_new_user_with_forbidden_email_laurent() {
-    	$this->users->createUser("laurent.le-merdy@laposte", "wedding_link", "name");
+    	$this->users->createUser("laurent.le-merdy@laposte", "Groom", "Laurent");
     }
 
     /**
@@ -66,7 +65,7 @@ class UsersTest extends PHPUnit_Framework_TestCase {
      * @expectedExceptionMessage Email is forbidden
      */
     public function cant_creates_new_user_with_forbidden_email_laurent2() {
-    	$this->users->createUser("laurentlemerdy@hotmail.com", "wedding_link", "name");
+    	$this->users->createUser("laurentlemerdy@hotmail.com", "Groom", "Laurent");
     }
     
     /**
@@ -75,7 +74,7 @@ class UsersTest extends PHPUnit_Framework_TestCase {
      * @expectedExceptionMessage Email is forbidden
      */
     public function cant_creates_new_user_with_forbidden_email_camille() {
-    	$this->users->createUser("camille_preco@hotmail.com", "wedding_link", "name");
+    	$this->users->createUser("camille_preco@hotmail.com", "Bride", "Camille");
     }
     
 }
