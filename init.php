@@ -14,7 +14,7 @@ function getRealURL() {
 		$url .= ":" . $_SERVER["SERVER_PORT"];
 	}
 	$lastPositionOfSlash = strrpos($_SERVER["SCRIPT_NAME"], '/');
-	$url .= substr($_SERVER["SCRIPT_NAME"], 0, strlen($_SERVER["SCRIPT_NAME"]) - $lastPositionOfSlash + 2);
+	$url .= substr($_SERVER["SCRIPT_NAME"], 0, $lastPositionOfSlash);
 	return $url;
 }
 
