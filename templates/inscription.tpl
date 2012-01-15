@@ -1,30 +1,39 @@
-<span class="field">nom, prénom ou pseudo</span> <input type="text" value="{user->getName}"><br>
+<form method="post" action="user.php">
+<input type="hidden" name="token" value="{$smarty.get.token}"/>
+<span class="field">nom, prénom ou pseudo</span> <input type="text" name="name" value="{user->getName}"><br>
 <span class="field">adresse email</span> <input type="text" value="{user->getEmail}" readonly="readonly"><br>
-<span class="field">lien avec les mariés</span> <input type="text" value="{user->getWeddingLink}"><br>
-<span class="field">&nbsp;</span> <input type="button" value="Mettre à jour mes informations"><br>
+<span class="field">lien avec les mariés</span> <input type="text" name="weddingLink" value="{user->getWeddingLink}"><br>
+{if (isset($smarty.session.errorMessage))}<span class="field" style="color: red">{$smarty.session.errorMessage}</span><br>{/if}
+<input type="submit" name="action" value="Mettre à jour mes informations" class="css3button">
+</form>
 <p></p>
-<p>Voici le <em>timing</em> de chaque vague : cliquez sur les boutons <em>S'inscrire/Se désinscrire</em> pour changer de vague.</p>
-<div id="waves" style="width: 573px; height: 79px; background-image: url(images/waves.png);" onmouseout="document.getElementById('waves').style.backgroundImage = 'url(images/waves.png)';">
- <a href="#" style="display: block; width: 120px; height: 79px; float: left;" onmouseover="document.getElementById('waves').style.backgroundImage = 'url(images/wave1.png)';"></a>
- <a href="#" style="display: block; width: 112px; height: 79px; float: left;" onmouseover="document.getElementById('waves').style.backgroundImage = 'url(images/wave2.png)';"></a>
- <a href="#" style="display: block; width: 112px; height: 79px; float: left;" onmouseover="document.getElementById('waves').style.backgroundImage = 'url(images/wave3.png)';"></a>
- <a href="#" style="display: block; width: 112px; height: 79px; float: left;" onmouseover="document.getElementById('waves').style.backgroundImage = 'url(images/wave4.png)';"></a>
- <a href="#" style="display: block; width: 117px; height: 79px; float: left;" onmouseover="document.getElementById('waves').style.backgroundImage = 'url(images/wave5.png)';"></a>
+<p>Voici le <em>timing</em> de chaque vague : cliquez sur une vaque pour vous y inscrire.</p>
+<form method="post" action="user.php" id="waveForm">
+<input type="hidden" name="token" value="{$smarty.get.token}"/>
+<input type="hidden" name="wave" value="{user->getWave}" id="wave"/>
+<input type="hidden" name="action" value="updateWave"/>
+</form>
+<div id="waves" style="width: 573px; height: 79px; background-image: url(images/wave{user->getWave}.png);" onmouseout="document.getElementById('waves').style.backgroundImage = 'url(images/wave{user->getWave}.png)';">
+ <a href="#" style="display: block; width: 120px; height: 79px; float: left;" onmouseover="document.getElementById('waves').style.backgroundImage = 'url(images/wave0.png)';" onclick="document.getElementById('wave').value = 0; document.getElementById('waveForm').submit();"></a>
+ <a href="#" style="display: block; width: 112px; height: 79px; float: left;" onmouseover="document.getElementById('waves').style.backgroundImage = 'url(images/wave1.png)';" onclick="document.getElementById('wave').value = 1; document.getElementById('waveForm').submit();"></a>
+ <a href="#" style="display: block; width: 112px; height: 79px; float: left;" onmouseover="document.getElementById('waves').style.backgroundImage = 'url(images/wave2.png)';" onclick="document.getElementById('wave').value = 2; document.getElementById('waveForm').submit();"></a>
+ <a href="#" style="display: block; width: 112px; height: 79px; float: left;" onmouseover="document.getElementById('waves').style.backgroundImage = 'url(images/wave3.png)';" onclick="document.getElementById('wave').value = 3; document.getElementById('waveForm').submit();"></a>
+ <a href="#" style="display: block; width: 117px; height: 79px; float: left;" onmouseover="document.getElementById('waves').style.backgroundImage = 'url(images/wave4.png)';" onclick="document.getElementById('wave').value = 4; document.getElementById('waveForm').submit();"></a>
 </div>
 <div style="float: left; width: 120px;">
- Sébastian<br>Éric
+&nbsp;{foreach from=$userNamesByWave[0] item=name}{$name}{if !$smarty.foreach.name.first}<br>{/if}{/foreach}
 </div>
 <div style="float: left; width: 112px;">
- Sébastian<br>Éric<br>Olivier<br>Sophie<br>Dorothée<br>Gaëlle<br>Sébastian
+&nbsp;{foreach from=$userNamesByWave[1] item=name}{$name}{if !$smarty.foreach.name.first}<br>{/if}{/foreach}
 </div>
 <div style="float: left; width: 112px;">
- Sébastian<br>Éric<br>Olivier<br>Sophie<br>Dorothée<br>Gaëlle<br>Sébastian<br>François<br>Paul<br>Jean-Claude
+&nbsp;{foreach from=$userNamesByWave[2] item=name}{$name}{if !$smarty.foreach.name.first}<br>{/if}{/foreach}
 </div>
 <div style="float: left; width: 112px;">
- Sébastian<br>Éric<br>Olivier<br>Sophie<br>Dorothée<br>Gaëlle<br>Sébastian<br>François<br>Paul<br>Jean-Claude<br>Florence
+&nbsp;{foreach from=$userNamesByWave[3] item=name}{$name}{if !$smarty.foreach.name.first}<br>{/if}{/foreach}
 </div>
 <div style="float: left; width: 112px;">
- Sébastian<br>Éric<br>Olivier<br>Sophie<br>Dorothée<br>Gaëlle<br>Sébastian<br>François<br>Paul<br>Jean-Claude<br>Florence<br>Utilisateur
+&nbsp;{foreach from=$userNamesByWave[4] item=name}{$name}{if !$smarty.foreach.name.first}<br>{/if}{/foreach}
 </div>
 <p style="clear: both;">Vous pouvez vous <strong>entraîner</strong> en fonction de la vague que vous avez choisi.</p>
 <iframe width="560" height="315" src="http://www.youtube.com/embed/b4kXbdK9O3Y?rel=0&start=28" frameborder="0" allowfullscreen></iframe></td>

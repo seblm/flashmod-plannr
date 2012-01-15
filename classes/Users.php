@@ -17,9 +17,9 @@ class Users {
 		$this->loadUsers();
 	}
 	
-	public function retrieveUser($urlParameters) {
-		$this->checkUrlParameters($urlParameters);
-		return $this->users[$urlParameters["token"]];
+	public function retrieveUser($token) {
+		$this->checkToken($token);
+		return $this->users[$token];
 	}
 	
 	public function createUser($email, $weddingLink, $name) {
@@ -33,13 +33,13 @@ class Users {
 		return $token;
 	}
 	
-	public function deleteUser($urlParameters) {
-		$this->checkUrlParameters($urlParameters);
-		if ($urlParameters["token"] == Users::$ADMIN_TOKEN) {
+	public function deleteUser($token) {
+		$this->checkToken($token);
+		if ($token == Users::$ADMIN_TOKEN) {
 			throw new InvalidArgumentException("Can't delete admin user");
 		}
-		$deletedUser = $this->users[$urlParameters["token"]];
-		unset($this->users[$urlParameters["token"]]);
+		$deletedUser = $this->users[$token];
+		unset($this->users[$token]);
 		return $deletedUser;
 	}
 	
@@ -53,6 +53,24 @@ class Users {
 		$handle = Users::openFile(false);
 		fwrite($handle, $serialized);
 		fclose($handle);
+	}
+	
+	public function getUserNamesByWave() {
+		$userNamesByWave = array();
+		for ($i = 0; $i < 5; $i++) {
+			$userNamesByWave[$i] = array();
+		}
+		foreach ($this->users as $user) {
+			if ($user->getWave() !== null) {
+				array_push($userNamesByWave[$user->getWave()], $user->getName());
+			}
+		}
+		for ($i = 0; $i < 5; $i++) {
+			if (count($userNamesByWave[$i]) > 1) {
+				sort($userNamesByWave[$i]);
+			}
+		}
+		return $userNamesByWave;
 	}
 	
 	private function loadUsers() {
@@ -81,11 +99,11 @@ class Users {
 		}	
 	}
 	
-	private function checkUrlParameters($urlParameters) {
-		if (!array_key_exists("token", $urlParameters) || strlen($urlParameters["token"]) != 16) {
+	private function checkToken($token) {
+		if ($token === null || !is_string($token) || preg_match("/[a-zA-Z0-9]{16}/", $token) != 1) {
 			throw new InvalidArgumentException("Bad token");
 		}
-		if (!array_key_exists($urlParameters["token"], $this->users)) {
+		if (!array_key_exists($token, $this->users)) {
 			throw new InvalidArgumentException("User doesn't exists");
 		}
 	}

@@ -26,7 +26,7 @@ class UsersTest extends PHPUnit_Framework_TestCase {
 	 * @expectedExceptionMessage Bad token
 	 */
 	public function should_not_retrieve_user_without_token() {
-		$this->users->retrieveUser(array());
+		$this->users->retrieveUser(null);
 	}
 	
 	/**
@@ -34,15 +34,24 @@ class UsersTest extends PHPUnit_Framework_TestCase {
 	 * @expectedException InvalidArgumentException
 	 * @expectedExceptionMessage Bad token
 	 */
+	public function should_not_retrieve_user_with_incorrect_token() {
+		$this->users->retrieveUser("incorrect_token");
+	}
+	
+	/**
+	 * @test
+	 * @expectedException InvalidArgumentException
+	 * @expectedExceptionMessage User doesn't exists
+	 */
 	public function should_not_retrieve_unkown_user() {
-		$this->users->retrieveUser(array("token" => "unkown-token"));
+		$this->users->retrieveUser("tokenWith16chars");
 	}
 	
 	/**
 	 * @test
 	 */
 	public function should_retrieve_existing_user() {
-		$user = $this->users->retrieveUser(array("token" => "JKi7IbcSBQmA71jB"));
+		$user = $this->users->retrieveUser("JKi7IbcSBQmA71jB");
 		$this->assertNotNull($user);
 		$this->assertEquals($user->getEmail(), "sebastian.lemerdy@gmail.com");
 		$this->assertEquals($user->getWeddingLink(), "Frère de Laurent");
@@ -90,13 +99,13 @@ class UsersTest extends PHPUnit_Framework_TestCase {
      * @test
      */
     public function should_save_user() {
-    	$user = $this->users->retrieveUser(array("token" => "JKi7IbcSBQmA71jB"))
+    	$user = $this->users->retrieveUser("JKi7IbcSBQmA71jB")
     		->setWeddingLink("Groom's big brother")->setName("Sébas.")->setWave(1);
     	
     	$this->users->saveUsers();
         $this->users = new Users();
         
-    	$user = $this->users->retrieveUser(array("token" => "JKi7IbcSBQmA71jB"));
+    	$user = $this->users->retrieveUser("JKi7IbcSBQmA71jB");
         $this->assertEquals($user->getEmail(), "sebastian.lemerdy@gmail.com");
         $this->assertEquals($user->getWeddingLink(), "Groom's big brother");
         $this->assertEquals($user->getName(), "Sébas.");
@@ -114,7 +123,7 @@ class UsersTest extends PHPUnit_Framework_TestCase {
     	
     	$this->assertTrue($token != "JKi7IbcSBQmA71jB", "A new token must have been generated.");
     	$this->assertRegExp("/[a-zA-Z0-9]{16}/", $token);
-    	$user = $this->users->retrieveUser(array("token" => $token));
+    	$user = $this->users->retrieveUser($token);
     	$this->assertEquals($user->getEmail(), "new-user@provider.com");
     	$this->assertEquals($user->getWeddingLink(), "wedlink");
     	$this->assertEquals($user->getName(), "myname");
@@ -126,10 +135,10 @@ class UsersTest extends PHPUnit_Framework_TestCase {
      */
     public function should_deletes_user() {
     	$token = $this->users->createUser("new-user@provider.com", "wedlink", "myname");
-    	$deletedUser = $this->users->deleteUser(array("token" => $token));
+    	$deletedUser = $this->users->deleteUser($token);
     	
     	try {
-    		$this->users->retrieveUser(array("token" => $token));
+    		$this->users->retrieveUser($token);
     		$this->fail();
     	} catch (Exception $e) {
     		$this->assertThat($e, new PHPUnit_Framework_Constraint_Exception("InvalidArgumentException"));
@@ -147,7 +156,35 @@ class UsersTest extends PHPUnit_Framework_TestCase {
      * @expectedExceptionMessage Can't delete admin user
      */
     public function cant_deletes_admin_user() {
-    	$this->users->deleteUser(array("token" => "JKi7IbcSBQmA71jB"));
+    	$this->users->deleteUser("JKi7IbcSBQmA71jB");
+    }
+    
+    /**
+     * @test
+     */
+    public function should_retrieve_user_names_by_wave() {
+    	$token = $this->users->createUser("wave1-2@provider.com", "unkown", "wave1-2");
+    	$this->users->retrieveUser($token)->setWave(0);
+    	$token = $this->users->createUser("wave1@provider.com", "unkown", "wave1");
+    	$this->users->retrieveUser($token)->setWave(0);
+    	$token = $this->users->createUser("wave2@provider.com", "unkown", "wave2");
+    	$this->users->retrieveUser($token)->setWave(1);
+    	$token = $this->users->createUser("wave4@provider.com", "unkown", "wave4");
+    	$this->users->retrieveUser($token)->setWave(3);
+    	$token = $this->users->createUser("wave5@provider.com", "unkown", "wave5");
+    	$this->users->retrieveUser($token)->setWave(4);
+    	
+    	$userNamesByWave = $this->users->getUserNamesByWave();
+    	
+    	$this->assertCount(5, $userNamesByWave);
+    	$this->assertCount(2, $userNamesByWave[0]);
+    	$this->assertEquals($userNamesByWave[0], array("wave1", "wave1-2"));
+    	$this->assertCount(1, $userNamesByWave[1]);
+    	$this->assertEmpty($userNamesByWave[2]);
+    	$this->assertCount(1, $userNamesByWave[3]);
+    	$this->assertEquals($userNamesByWave[3], array("wave4"));
+    	$this->assertCount(1, $userNamesByWave[4]);
+    	$this->assertEquals($userNamesByWave[4], array("wave5"));
     }
 
 }

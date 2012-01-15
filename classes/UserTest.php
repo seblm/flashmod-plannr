@@ -1,24 +1,10 @@
 <?php
 
 require_once("classes/User.php");
-require_once("classes/Users.php");
 
 class UserTest extends PHPUnit_Framework_TestCase {
 	
 	private $users;
-	
-	public function setUp() {
-		if (!defined("TEST")) {
-			define("TEST", true);
-		}
-		$this->users = new Users();
-	}
-	
-	public function tearDown() {
-		if (is_file("users-test")) {
-			unlink("users-test");
-		}
-	}
 	
     /**
      * @test
@@ -66,6 +52,16 @@ class UserTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($user->getWeddingLink(), "Groom's big brother");
         $this->assertEquals($user->getName(), "Sébas.");
         $this->assertEquals($user->getWave(), 1);
+    }
+    
+    /**
+     * @test
+     * @expectedException        InvalidArgumentException
+     * @expectedExceptionMessage Bad wave
+     */
+    public function cant_set_wave_with_string() {
+    	$user = new User("sebastian.lemerdy@gmail.com", "Frère de Laurent", "Sébastian");
+    	$user->setWave("1");
     }
     
 }
