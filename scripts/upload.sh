@@ -44,6 +44,7 @@ put add-a-friend.tpl
 put index.tpl
 put inscription.tpl
 put template.tpl
+put unauthorized.tpl
 put video.tpl
 mkdir ../templates_c
 

@@ -2,10 +2,12 @@
 
 require_once("classes/Users.php");
 require_once("classes/User.php");
+require_once("lib/Smarty-2.6.26/Smarty.class.php");
 
-function unauthorize() {
+function unauthorize($smarty) {
 	header("HTTP/1.1 401 Unauthorized");
-	die("Unauthorized");
+	$smarty->display("unauthorized.tpl");
+	exit;
 }
 
 function getRealURL() {
@@ -18,10 +20,11 @@ function getRealURL() {
 	return $url;
 }
 
+date_default_timezone_set("Europe/Paris");
 session_start();
 
+$smarty = new Smarty();
 $users = new Users();
-
 $token = "";
 if (array_key_exists("token", $_GET)) {
 	$token = $_GET["token"];
@@ -32,12 +35,9 @@ if (array_key_exists("token", $_GET)) {
 try {
 	$user = $users->retrieveUser($token);
 } catch (InvalidArgumentException $e) {
-	unauthorize();
+	unauthorize($smarty);
 }
 
-date_default_timezone_set("Europe/Paris");
-require_once("lib/Smarty-2.6.26/Smarty.class.php");
-$smarty = new Smarty();
 $smarty->register_object("user", $user);
 
 ?>
