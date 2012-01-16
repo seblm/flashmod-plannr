@@ -15,8 +15,8 @@ class UsersTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	public function tearDown() {
-		if (is_file("users-test")) {
-			unlink("users-test");
+		if (is_file("data/users-test")) {
+			unlink("data/users-test");
 		}
 	}
 	
@@ -74,7 +74,7 @@ class UsersTest extends PHPUnit_Framework_TestCase {
      * @expectedExceptionMessage Email is forbidden
      */
     public function cant_creates_new_user_with_forbidden_email_laurent() {
-    	$this->users->createUser("laurent.le-merdy@laposte", "Groom", "Laurent");
+    	$this->users->createUser("laurent.le-merdy@laposte.net", "Groom", "Laurent");
     }
 
     /**

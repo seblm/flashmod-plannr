@@ -129,9 +129,9 @@ class Users {
 	
 	private static function getFileName() {
 		if (defined("TEST")) {
-			return "users-test";
+			return "data/users-test";
 		}
-		return "users";
+		return "data/users";
 	}
 	
 }
