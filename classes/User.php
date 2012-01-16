@@ -43,11 +43,11 @@ class User {
 	}
 
 	public function setWave($wave) {
-		if ($wave !== null && !is_int($wave) || $wave < 0 || $wave > 4) {
-			throw new InvalidArgumentException("Bad wave");
+		if (($wave >= 1 && $wave <= 5) || $wave === null) {
+			$this->wave = $wave;
+			return $this;
 		}
-		$this->wave = $wave;
-		return $this;
+		throw new InvalidArgumentException("Bad wave");
 	}
 	
 	public function getEmail() {

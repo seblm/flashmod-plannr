@@ -8,7 +8,10 @@ if (isset($_POST["action"])) {
 	$action = $_POST["action"];
 	try {
 		if ($action == "updateWave") {
-			$wave = (int) $_POST["wave"];
+			$wave = $_POST["wave"];
+			if (strlen($_POST["wave"]) == 0) {
+				$wave = null;
+			}
 			$user->setWave($wave);
 			$users->saveUsers();
 		} else if ($action == "Mettre à jour mes informations") {

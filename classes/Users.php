@@ -57,17 +57,19 @@ class Users {
 	
 	public function getUserNamesByWave() {
 		$userNamesByWave = array();
-		for ($i = 0; $i < 5; $i++) {
+		for ($i = 0; $i <= 5; $i++) {
 			$userNamesByWave[$i] = array();
 		}
 		foreach ($this->users as $user) {
-			if ($user->getWave() !== null) {
-				array_push($userNamesByWave[$user->getWave()], $user->getName());
+			$wave = $user->getWave();
+			if ($wave === null) {
+				$wave = 0;
 			}
+			array_push($userNamesByWave[$wave], $user->getName());
 		}
-		for ($i = 0; $i < 5; $i++) {
+		for ($i = 0; $i <= 5; $i++) {
 			if (count($userNamesByWave[$i]) > 1) {
-				sort($userNamesByWave[$i]);
+				rsort($userNamesByWave[$i]);
 			}
 		}
 		return $userNamesByWave;

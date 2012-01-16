@@ -13,27 +13,31 @@
 <input type="hidden" name="wave" value="{user->getWave}" id="wave"/>
 <input type="hidden" name="action" value="updateWave"/>
 </form>
-<div id="waves" style="width: 573px; height: 79px; background-image: url(images/wave{user->getWave}.png);" onmouseout="document.getElementById('waves').style.backgroundImage = 'url(images/wave{user->getWave}.png)';">
- <a href="#" style="display: block; width: 120px; height: 79px; float: left;" onmouseover="document.getElementById('waves').style.backgroundImage = 'url(images/wave0.png)';" onclick="document.getElementById('wave').value = 0; document.getElementById('waveForm').submit();"></a>
- <a href="#" style="display: block; width: 112px; height: 79px; float: left;" onmouseover="document.getElementById('waves').style.backgroundImage = 'url(images/wave1.png)';" onclick="document.getElementById('wave').value = 1; document.getElementById('waveForm').submit();"></a>
- <a href="#" style="display: block; width: 112px; height: 79px; float: left;" onmouseover="document.getElementById('waves').style.backgroundImage = 'url(images/wave2.png)';" onclick="document.getElementById('wave').value = 2; document.getElementById('waveForm').submit();"></a>
- <a href="#" style="display: block; width: 112px; height: 79px; float: left;" onmouseover="document.getElementById('waves').style.backgroundImage = 'url(images/wave3.png)';" onclick="document.getElementById('wave').value = 3; document.getElementById('waveForm').submit();"></a>
- <a href="#" style="display: block; width: 117px; height: 79px; float: left;" onmouseover="document.getElementById('waves').style.backgroundImage = 'url(images/wave4.png)';" onclick="document.getElementById('wave').value = 4; document.getElementById('waveForm').submit();"></a>
+<div id="waves" style="width: 675px; height: 79px; background-image: url(images/wave{user->getWave}.png);" onmouseout="document.getElementById('waves').style.backgroundImage = 'url(images/wave{user->getWave}.png)';">
+<a href="#" style="display: block; width: 120px; height: 79px; float: left;" onmouseover="document.getElementById('waves').style.backgroundImage = 'url(images/wave1.png)';" onclick="document.getElementById('wave').value = 1;    document.getElementById('waveForm').submit();"></a>
+<a href="#" style="display: block; width: 112px; height: 79px; float: left;" onmouseover="document.getElementById('waves').style.backgroundImage = 'url(images/wave2.png)';" onclick="document.getElementById('wave').value = 2;    document.getElementById('waveForm').submit();"></a>
+<a href="#" style="display: block; width: 112px; height: 79px; float: left;" onmouseover="document.getElementById('waves').style.backgroundImage = 'url(images/wave3.png)';" onclick="document.getElementById('wave').value = 3;    document.getElementById('waveForm').submit();"></a>
+<a href="#" style="display: block; width: 112px; height: 79px; float: left;" onmouseover="document.getElementById('waves').style.backgroundImage = 'url(images/wave4.png)';" onclick="document.getElementById('wave').value = 4;    document.getElementById('waveForm').submit();"></a>
+<a href="#" style="display: block; width: 117px; height: 79px; float: left;" onmouseover="document.getElementById('waves').style.backgroundImage = 'url(images/wave5.png)';" onclick="document.getElementById('wave').value = 5;    document.getElementById('waveForm').submit();"></a>
+<a href="#" style="display: block; width: 102px; height: 79px; float: left;" onmouseover="document.getElementById('waves').style.backgroundImage = 'url(images/wave.png)'; " onclick="document.getElementById('wave').value = null; document.getElementById('waveForm').submit();"></a>
 </div>
-<div style="float: left; width: 120px;">
-&nbsp;{foreach from=$userNamesByWave[0] item=name}{$name}{if !$smarty.foreach.name.first}<br>{/if}{/foreach}
-</div>
-<div style="float: left; width: 112px;">
+<div style="float: left; width: 120px; background-color: #363636">
 &nbsp;{foreach from=$userNamesByWave[1] item=name}{$name}{if !$smarty.foreach.name.first}<br>{/if}{/foreach}
 </div>
-<div style="float: left; width: 112px;">
+<div style="float: left; width: 112px; background-color: #363636">
 &nbsp;{foreach from=$userNamesByWave[2] item=name}{$name}{if !$smarty.foreach.name.first}<br>{/if}{/foreach}
 </div>
-<div style="float: left; width: 112px;">
+<div style="float: left; width: 112px; background-color: #363636">
 &nbsp;{foreach from=$userNamesByWave[3] item=name}{$name}{if !$smarty.foreach.name.first}<br>{/if}{/foreach}
 </div>
-<div style="float: left; width: 112px;">
+<div style="float: left; width: 112px; background-color: #363636">
 &nbsp;{foreach from=$userNamesByWave[4] item=name}{$name}{if !$smarty.foreach.name.first}<br>{/if}{/foreach}
+</div>
+<div style="float: left; width: 117px; background-color: #363636">
+&nbsp;{foreach from=$userNamesByWave[5] item=name}{$name}{if !$smarty.foreach.name.first}<br>{/if}{/foreach}
+</div>
+<div style="float: left; width: 102px; background-color: #363636">
+&nbsp;{foreach from=$userNamesByWave[0] item=name}{$name}{if !$smarty.foreach.name.first}<br>{/if}{/foreach}
 </div>
 <p style="clear: both;">Vous pouvez vous <strong>entraîner</strong> en fonction de la vague que vous avez choisi.</p>
 <iframe width="560" height="315" src="http://www.youtube.com/embed/b4kXbdK9O3Y?rel=0&start=28" frameborder="0" allowfullscreen></iframe></td>

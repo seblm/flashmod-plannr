@@ -31,11 +31,11 @@ put img09.jpg
 put kablam_Party_Animal.png
 put splash.jpg
 put wave.png
-put wave0.png
 put wave1.png
 put wave2.png
 put wave3.png
 put wave4.png
+put wave5.png
 mkdir ../templates
 cd ../templates
 lcd ../templates

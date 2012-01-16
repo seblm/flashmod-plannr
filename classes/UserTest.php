@@ -48,10 +48,19 @@ class UserTest extends PHPUnit_Framework_TestCase {
     public function update_infos() {
     	$user = new User("sebastian.lemerdy@gmail.com", "Frère de Laurent", "Sébastian");
     	$user->setWeddingLink("Groom's big brother")->setName("Sébas.")->setWave(1);
-        $this->assertEquals($user->getEmail(), "sebastian.lemerdy@gmail.com");
-        $this->assertEquals($user->getWeddingLink(), "Groom's big brother");
-        $this->assertEquals($user->getName(), "Sébas.");
-        $this->assertEquals($user->getWave(), 1);
+        $this->assertEquals("sebastian.lemerdy@gmail.com", $user->getEmail());
+        $this->assertEquals("Groom's big brother", $user->getWeddingLink());
+        $this->assertEquals("Sébas.", $user->getName());
+        $this->assertEquals(1, $user->getWave());
+    }
+    
+    /**
+     * @test
+     */
+    public function can_set_wave_with_string() {
+    	$user = new User("sebastian.lemerdy@gmail.com", "Frère de Laurent", "Sébastian");
+    	$user->setWave("1");
+    	$this->assertEquals(1, $user->getWave());
     }
     
     /**
@@ -59,9 +68,28 @@ class UserTest extends PHPUnit_Framework_TestCase {
      * @expectedException        InvalidArgumentException
      * @expectedExceptionMessage Bad wave
      */
-    public function cant_set_wave_with_string() {
+    public function cant_set_wave_lower_than_minimum() {
     	$user = new User("sebastian.lemerdy@gmail.com", "Frère de Laurent", "Sébastian");
-    	$user->setWave("1");
+    	$user->setWave(0);
+    }
+    
+    /**
+     * @test
+     * @expectedException        InvalidArgumentException
+     * @expectedExceptionMessage Bad wave
+     */
+    public function cant_set_wave_upper_than_maximum() {
+    	$user = new User("sebastian.lemerdy@gmail.com", "Frère de Laurent", "Sébastian");
+    	$user->setWave(6);
+    }
+    
+    /**
+     * @test
+     */
+    public function should_set_null_wave() {
+    	$user = new User("sebastian.lemerdy@gmail.com", "Frère de Laurent", "Sébastian");
+    	$user->setWave(null);
+    	$this->assertNull($user->getWave());
     }
     
 }
