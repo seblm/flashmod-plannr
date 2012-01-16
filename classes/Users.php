@@ -5,7 +5,7 @@ require_once("classes/User.php");
 class Users {
 	
 	private static $FORBIDDEN_EMAILS = array(
-		"laurent.le-merdy@laposte",
+		"laurent.le-merdy@laposte.net",
 		"laurentlemerdy@hotmail.com",
 		"camille_preco@hotmail.com",
 	);
