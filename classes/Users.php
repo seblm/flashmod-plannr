@@ -9,7 +9,7 @@ class Users {
 		"laurentlemerdy@hotmail.com",
 		"camille_preco@hotmail.com",
 	);
-	private static $ADMIN_TOKEN = "JKi7IbcSBQmA71jB";
+	public static $ADMIN_TOKEN = "JKi7IbcSBQmA71jB";
 	
 	private $users;
 

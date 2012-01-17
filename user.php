@@ -15,10 +15,10 @@ if (isset($_POST["action"])) {
 				$users->putUserOnWave($user, $wave);
 			}
 			$users->saveUsers();
-		} else if ($action == "Mettre à jour mes informations") {
+		} elseif ($action == "Mettre à jour mes informations") {
 			$user->setName($_POST["name"])->setWeddingLink($_POST["weddingLink"]);
 			$users->saveUsers();
-		} else if ($action == "Inviter") {
+		} elseif ($action == "Inviter") {
 			$returnScript = "add-a-friend";
 			$newToken = $users->createUser($_POST["email"], $_POST["weddingLink"], $_POST["name"]);
 			if (mail(
@@ -42,6 +42,16 @@ if (isset($_POST["action"])) {
 		}
 	} catch (Exception $e) {
 		$_SESSION["errorMessage"] = $e->getMessage();
+	}
+} elseif (isset($_GET["action"]) && isset($_GET["token"]) && isset($_GET["tokenToDelete"])) {
+	if ($_GET["action"] == "delete" && $_GET["token"] == Users::$ADMIN_TOKEN) {
+		try {
+			$users->deleteUser($_GET["tokenToDelete"]);
+			$users->saveUsers();
+		} catch (Exception $e) {
+			print_r($e);
+		}
+		die();
 	}
 }
 
