@@ -15,30 +15,30 @@
 <input type="hidden" name="action" value="updateWave"/>
 </form>
 <div id="waves" style="width: 675px; height: 79px; background-image: url(images/wave{$wave}.png);" onmouseout="document.getElementById('waves').style.backgroundImage = 'url(images/wave{$wave}.png)';">
-<a href="#" style="display: block; width: 120px; height: 79px; float: left;" title="vague 1"      onmouseover="document.getElementById('waves').style.backgroundImage = 'url(images/wave1.png)';" onclick="document.getElementById('wave').value = 1;    document.getElementById('waveForm').submit();"></a>
-<a href="#" style="display: block; width: 112px; height: 79px; float: left;" title="vague 2"      onmouseover="document.getElementById('waves').style.backgroundImage = 'url(images/wave2.png)';" onclick="document.getElementById('wave').value = 2;    document.getElementById('waveForm').submit();"></a>
-<a href="#" style="display: block; width: 112px; height: 79px; float: left;" title="vague 3"      onmouseover="document.getElementById('waves').style.backgroundImage = 'url(images/wave3.png)';" onclick="document.getElementById('wave').value = 3;    document.getElementById('waveForm').submit();"></a>
-<a href="#" style="display: block; width: 112px; height: 79px; float: left;" title="vague 4"      onmouseover="document.getElementById('waves').style.backgroundImage = 'url(images/wave4.png)';" onclick="document.getElementById('wave').value = 4;    document.getElementById('waveForm').submit();"></a>
-<a href="#" style="display: block; width: 117px; height: 79px; float: left;" title="vague 5"      onmouseover="document.getElementById('waves').style.backgroundImage = 'url(images/wave5.png)';" onclick="document.getElementById('wave').value = 5;    document.getElementById('waveForm').submit();"></a>
-<a href="#" style="display: block; width: 102px; height: 79px; float: left;" title="aucune vague" onmouseover="document.getElementById('waves').style.backgroundImage = 'url(images/wave.png)'; " onclick="document.getElementById('wave').value = null; document.getElementById('waveForm').submit();"></a>
+<a{if in_array(1, $availableWaves) && $wave != 1} href="#"{/if} style="display: block; width: 120px; height: 79px; float: left;" title="vague 1" {if in_array(1, $availableWaves) && $wave != 1} onmouseover="document.getElementById('waves').style.backgroundImage = 'url(images/wave1.png)';" onclick="document.getElementById('wave').value = 1;    document.getElementById('waveForm').submit();"{/if}></a>
+<a{if in_array(2, $availableWaves) && $wave != 2} href="#"{/if} style="display: block; width: 112px; height: 79px; float: left;" title="vague 2" {if in_array(2, $availableWaves) && $wave != 2} onmouseover="document.getElementById('waves').style.backgroundImage = 'url(images/wave2.png)';" onclick="document.getElementById('wave').value = 2;    document.getElementById('waveForm').submit();"{/if}></a>
+<a{if in_array(3, $availableWaves) && $wave != 3} href="#"{/if} style="display: block; width: 112px; height: 79px; float: left;" title="vague 3" {if in_array(3, $availableWaves) && $wave != 3} onmouseover="document.getElementById('waves').style.backgroundImage = 'url(images/wave3.png)';" onclick="document.getElementById('wave').value = 3;    document.getElementById('waveForm').submit();"{/if}></a>
+<a{if in_array(4, $availableWaves) && $wave != 4} href="#"{/if} style="display: block; width: 112px; height: 79px; float: left;" title="vague 4" {if in_array(4, $availableWaves) && $wave != 4} onmouseover="document.getElementById('waves').style.backgroundImage = 'url(images/wave4.png)';" onclick="document.getElementById('wave').value = 4;    document.getElementById('waveForm').submit();"{/if}></a>
+<a{if in_array(5, $availableWaves) && $wave != 5} href="#"{/if} style="display: block; width: 117px; height: 79px; float: left;" title="vague 5" {if in_array(5, $availableWaves) && $wave != 5} onmouseover="document.getElementById('waves').style.backgroundImage = 'url(images/wave5.png)';" onclick="document.getElementById('wave').value = 5;    document.getElementById('waveForm').submit();"{/if}></a>
+<a                                   href="#"      style="display: block; width: 102px; height: 79px; float: left;" title="aucune vague"                             onmouseover="document.getElementById('waves').style.backgroundImage = 'url(images/wave.png)'; " onclick="document.getElementById('wave').value = null; document.getElementById('waveForm').submit();"     ></a>
 </div>
 <div style="float: left; width: 115px; background-color: #363636; padding-left: 5px;">
-0:04{foreach from=$userNamesByWave[1] item=name}<br>{$name}{/foreach}
+0:04{foreach from=$userNamesByWave item=userNames name=userNames}{if $smarty.foreach.userNames.index == 1                                        }{foreach from=$userNames item=name}<br>{$name}{/foreach}{/if}{/foreach}
 </div>
 <div style="float: left; width: 112px; background-color: #363636">
-0:32{foreach from=$userNamesByWave[2] item=name}<br>{$name}{/foreach}
+0:32{foreach from=$userNamesByWave item=userNames name=userNames}{if $smarty.foreach.userNames.index >= 1 && $smarty.foreach.userNames.index <= 2}{foreach from=$userNames item=name}<br>{$name}{/foreach}{/if}{/foreach}
 </div>
 <div style="float: left; width: 112px; background-color: #363636">
-1:01{foreach from=$userNamesByWave[3] item=name}<br>{$name}{/foreach}
+1:01{foreach from=$userNamesByWave item=userNames name=userNames}{if $smarty.foreach.userNames.index >= 1 && $smarty.foreach.userNames.index <= 3}{foreach from=$userNames item=name}<br>{$name}{/foreach}{/if}{/foreach}
 </div>
 <div style="float: left; width: 112px; background-color: #363636">
-1:46{foreach from=$userNamesByWave[4] item=name}<br>{$name}{/foreach}
+1:46{foreach from=$userNamesByWave item=userNames name=userNames}{if $smarty.foreach.userNames.index >= 1 && $smarty.foreach.userNames.index <= 4}{foreach from=$userNames item=name}<br>{$name}{/foreach}{/if}{/foreach}
 </div>
 <div style="float: left; width: 117px; background-color: #363636">
-2:35{foreach from=$userNamesByWave[5] item=name}<br>{$name}{/foreach}
+2:35{foreach from=$userNamesByWave item=userNames name=userNames}{if $smarty.foreach.userNames.index >= 1 && $smarty.foreach.userNames.index <= 5}{foreach from=$userNames item=name}<br>{$name}{/foreach}{/if}{/foreach}
 </div>
 <div style="float: left; width: 102px; background-color: #363636">
-4:06{foreach from=$userNamesByWave[0] item=name}<br>{$name}{/foreach}
+4:06{foreach from=$userNamesByWave item=userNames name=userNames}{if $smarty.foreach.userNames.index == 0                                        }{foreach from=$userNames item=name}<br>{$name}{/foreach}{/if}{/foreach}
 </div>
 <p style="clear: both;">&nbsp;</p>
 {if $wave !== null}

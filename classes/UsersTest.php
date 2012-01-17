@@ -99,8 +99,8 @@ class UsersTest extends PHPUnit_Framework_TestCase {
      * @test
      */
     public function should_save_user() {
-    	$user = $this->users->retrieveUser("JKi7IbcSBQmA71jB")
-    		->setWeddingLink("Groom's big brother")->setName("Sébas.")->setWave(1);
+    	$user = $this->users->retrieveUser("JKi7IbcSBQmA71jB")->setWeddingLink("Groom's big brother")->setName("Sébas.");
+    	$this->users->putUserOnWave($user, 1);
     	
     	$this->users->saveUsers();
         $this->users = new Users();
@@ -163,34 +163,100 @@ class UsersTest extends PHPUnit_Framework_TestCase {
      * @test
      */
     public function should_retrieve_user_names_by_wave() {
-    	$token = $this->users->createUser("nowave@provider.com", "unknown", "nowave");
-    	$token = $this->users->createUser("xave1@provider.com", "unknown", "xave1");
-    	$this->users->retrieveUser($token)->setWave(1);
-    	$token = $this->users->createUser("wave1@provider.com", "unknown", "wave1");
-    	$this->users->retrieveUser($token)->setWave(1);
-    	$token = $this->users->createUser("wave2@provider.com", "unknown", "wave2");
-    	$this->users->retrieveUser($token)->setWave(2);
-    	$token = $this->users->createUser("wave4@provider.com", "unknown", "wave4");
-    	$this->users->retrieveUser($token)->setWave(4);
-    	$token = $this->users->createUser("wave5@provider.com", "unknown", "wave5");
-    	$this->users->retrieveUser($token)->setWave(5);
+    	$this->users->createUser("nowave@provider.com", "unknown", "nowave");
+    	$this->users
+    		->putUserOnWave($this->users->retrieveUser($this->users->createUser("wave1@provider.com", "unknown", "wave1")), 1)
+    		->putUserOnWave($this->users->retrieveUser($this->users->createUser("xave2@provider.com", "unknown", "xave2")), 2)
+    		->putUserOnWave($this->users->retrieveUser($this->users->createUser("wave2@provider.com", "unknown", "wave2")), 2)
+    		->putUserOnWave($this->users->retrieveUser($this->users->createUser("wave4@provider.com", "unknown", "wave4")), 4)
+    		->putUserOnWave($this->users->retrieveUser($this->users->createUser("wave5@provider.com", "unknown", "wave5")), 5);
     	
     	$userNamesByWave = $this->users->getUserNamesByWave();
     	
     	$this->assertCount(6, $userNamesByWave);
     	$this->assertCount(2, $userNamesByWave[0]);
-    	$this->assertEquals(array("nowave", "Sébastian"), $userNamesByWave[0]);
-    	$this->assertCount(2, $userNamesByWave[1]);
-    	$this->assertEquals(array("xave1", "wave1"), $userNamesByWave[1]);
-    	$this->assertCount(1, $userNamesByWave[2]);
-    	$this->assertEquals(array("wave2"), $userNamesByWave[2]);
+    	$this->assertEquals(array("Sébastian", "nowave"), $userNamesByWave[0]);
+    	$this->assertCount(1, $userNamesByWave[1]);
+    	$this->assertEquals(array("wave1"), $userNamesByWave[1]);
+    	$this->assertCount(2, $userNamesByWave[2]);
+    	$this->assertEquals(array("wave2", "xave2"), $userNamesByWave[2]);
     	$this->assertEmpty($userNamesByWave[3]);
     	$this->assertCount(1, $userNamesByWave[4]);
     	$this->assertEquals(array("wave4"), $userNamesByWave[4]);
     	$this->assertCount(1, $userNamesByWave[5]);
     	$this->assertEquals(array("wave5"), $userNamesByWave[5]);
     }
-
+    
+    /**
+     * @test
+     * @expectedException        InvalidArgumentException
+     * @expectedExceptionMessage Bad wave
+     */
+    public function cant_put_user_on_wave_lower_than_minimum() {
+    	$this->users->putUserOnWave($this->users->retrieveUser("JKi7IbcSBQmA71jB"), 0);
+    }
+    
+    /**
+     * @test
+     * @expectedException        InvalidArgumentException
+     * @expectedExceptionMessage Bad wave
+     */
+    public function cant_put_user_on_wave_upper_than_maximum() {
+    	$this->users->putUserOnWave($this->users->retrieveUser("JKi7IbcSBQmA71jB"), 6);
+    }
+    
+    /**
+     * @test
+     * @expectedException        InvalidArgumentException
+     * @expectedExceptionMessage Can't put null user on wave 3
+     */
+    public function cant_put_null_user_on_wave() {
+    	$this->users->putUserOnWave(null, 3);
+    }
+    
+    /**
+     * @test
+     */
+    public function should_retrieve_available_waves() {
+    	$users = $this->fillWavesStartingFromSecond();
+    	$this->users
+    		->removeUserFromWaves($users[3][0])
+    		->removeUserFromWaves($users[3][1])
+    		->removeUserFromWaves($users[3][2])
+    		->removeUserFromWaves($users[4][2]);
+    	
+    	$availableWaves = $this->users->getAvailableWaves();
+    	
+    	$this->assertCount(3, $availableWaves);
+    	$this->assertContains(1, $availableWaves);
+    	$this->assertContains(3, $availableWaves);
+    	$this->assertContains(4, $availableWaves);
+    }
+    
+    private function fillWavesStartingFromSecond() {
+    	$users = array(array(), array(), );
+    	for ($wave = 2; $wave <= 5; $wave++) {
+    		$users[$wave] = array();
+    		for ($i = 1; $i <= $wave; $i++) {
+    			$token = $this->users->createUser("wave$wave$i@provider.com", "unknown", "wave$wave$i");
+    			$user = $this->users->retrieveUser($token);
+    			$this->users->putUserOnWave($user, $wave);
+    			array_push($users[$wave], $user);
+    		}
+    	}
+    	return $users;
+    }
+    
+    /**
+     * @test
+     * @expectedException        InvalidArgumentException
+     * @expectedExceptionMessage Wave 1 is full
+     */
+    public function cant_get_into_wave_where_all_users_are_already_in_place() {
+    	$this->users->putUserOnWave($this->users->retrieveUser("JKi7IbcSBQmA71jB"), 1);
+    	$this->users->putUserOnWave($this->users->retrieveUser($this->users->createUser("wave@provider.com", "unknown", "wave")), 1);
+    }
+    
 }
 
 ?>

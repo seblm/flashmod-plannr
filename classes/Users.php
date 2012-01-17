@@ -43,16 +43,52 @@ class Users {
 		return $deletedUser;
 	}
 	
-	public function checkNewEmail($email) {
-		$this->checkEmailForbidden($email);
-		$this->checkExistingUser($email);
-	}
-	
 	public function saveUsers() {
 		$serialized = serialize($this->users);
 		$handle = Users::openFile(false);
 		fwrite($handle, $serialized);
 		fclose($handle);
+		return $this;
+	}
+	
+	public function checkNewEmail($email) {
+		$this->checkEmailForbidden($email);
+		$this->checkExistingUser($email);
+	}
+	
+	public function removeUserFromWaves($user) {
+		$this->checkUser($user);
+		$user->setWave(null);
+		return $this;
+	}
+	
+	public function putUserOnWave($user, $wave) {
+		$this->checkUser($user, $wave);
+		if ($wave < 1 || $wave > 5 || $wave === null) {
+			throw new InvalidArgumentException("Bad wave");
+		}
+		if (!in_array($wave, $this->getAvailableWaves())) {
+			throw new InvalidArgumentException("Wave $wave is full");
+		}
+		$user->setWave($wave);
+		return $this;
+	}
+	
+	public function getAvailableWaves() {
+		$userNamesByWave = $this->getUserNamesByWave();
+		$nbUsersByWave = array_map("count", $userNamesByWave);
+		$nbUsersInWaves = array_sum($nbUsersByWave) - $nbUsersByWave[0];
+		$minNbOfUsersForFirstWave = max(1, (int) ($nbUsersInWaves / 5) - 1);
+		$availableWaves = array();
+		
+		for ($i = 1; $i <= 5; $i++) {
+			$maxNbOfUsers = $minNbOfUsersForFirstWave + $i - 1;
+			if ($maxNbOfUsers > count($userNamesByWave[$i])) {
+				array_push($availableWaves, $i);
+			}
+		}
+		
+		return $availableWaves;
 	}
 	
 	public function getUserNamesByWave() {
@@ -69,7 +105,7 @@ class Users {
 		}
 		for ($i = 0; $i <= 5; $i++) {
 			if (count($userNamesByWave[$i]) > 1) {
-				rsort($userNamesByWave[$i]);
+				sort($userNamesByWave[$i]);
 			}
 		}
 		return $userNamesByWave;
@@ -107,6 +143,12 @@ class Users {
 		}
 		if (!array_key_exists($token, $this->users)) {
 			throw new InvalidArgumentException("User doesn't exists");
+		}
+	}
+	
+	private function checkUser($user, $wave = null) {
+		if ($user === null) {
+			throw new InvalidArgumentException("Can't put null user on wave $wave");
 		}
 	}
 	

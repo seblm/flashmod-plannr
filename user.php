@@ -10,13 +10,13 @@ if (isset($_POST["action"])) {
 		if ($action == "updateWave") {
 			$wave = $_POST["wave"];
 			if (strlen($_POST["wave"]) == 0) {
-				$wave = null;
+				$users->removeUserFromWaves($user);
+			} else {
+				$users->putUserOnWave($user, $wave);
 			}
-			$user->setWave($wave);
 			$users->saveUsers();
 		} else if ($action == "Mettre à jour mes informations") {
-			$user->setName($_POST["name"]);
-			$user->setWeddingLink($_POST["weddingLink"]);
+			$user->setName($_POST["name"])->setWeddingLink($_POST["weddingLink"]);
 			$users->saveUsers();
 		} else if ($action == "Inviter") {
 			$returnScript = "add-a-friend";
