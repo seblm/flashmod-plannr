@@ -20,6 +20,9 @@
 {/literal}</script>
 </head>
 <body{if $currentPage != 'index'} class="body2"{/if}>
+<div id="ribbon">
+ <span>Confidentiel</span>
+</div>
 <section>
 <div id="header" class="container">
 <header id="logo"><h1><a href="http://fr.wikipedia.org/wiki/Flash_mob">Flashmob</a> mariage</h1></header>
