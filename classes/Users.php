@@ -77,13 +77,15 @@ class Users {
 	public function getAvailableWaves() {
 		$userNamesByWave = $this->getUserNamesByWave();
 		$nbUsersByWave = array_map("count", $userNamesByWave);
-		$nbUsersInWaves = array_sum($nbUsersByWave) - $nbUsersByWave[0];
-		$minNbOfUsersForFirstWave = max(1, (int) ($nbUsersInWaves / 5) - 1);
+		$nbUsers = array_sum($nbUsersByWave);
+		$maxNbOfUsers = floor($nbUsers / 2) + 1;
 		$availableWaves = array();
 		
-		for ($i = 1; $i <= 5; $i++) {
-			$maxNbOfUsers = $minNbOfUsersForFirstWave + $i - 1;
-			if ($maxNbOfUsers > count($userNamesByWave[$i])) {
+		if ($nbUsersByWave[1] < 2) {
+			array_push($availableWaves, 1);
+		}
+		for ($i = 2; $i <= 5; $i++) {
+			if ($nbUsersByWave[$i] < $maxNbOfUsers) {
 				array_push($availableWaves, $i);
 			}
 		}

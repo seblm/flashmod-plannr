@@ -218,33 +218,16 @@ class UsersTest extends PHPUnit_Framework_TestCase {
      * @test
      */
     public function should_retrieve_available_waves() {
-    	$users = $this->fillWavesStartingFromSecond();
-    	$this->users
-    		->removeUserFromWaves($users[3][0])
-    		->removeUserFromWaves($users[3][1])
-    		->removeUserFromWaves($users[3][2])
-    		->removeUserFromWaves($users[4][2]);
+    	$this->users->putUserOnWave($this->users->retrieveUser($this->users->createUser("wave11@provider.com", "unknown", "wave11")), 2);
+    	$this->users->putUserOnWave($this->users->retrieveUser($this->users->createUser("wave22@provider.com", "unknown", "wave12")), 2);
     	
     	$availableWaves = $this->users->getAvailableWaves();
     	
-    	$this->assertCount(3, $availableWaves);
+    	$this->assertCount(4, $availableWaves);
     	$this->assertContains(1, $availableWaves);
     	$this->assertContains(3, $availableWaves);
     	$this->assertContains(4, $availableWaves);
-    }
-    
-    private function fillWavesStartingFromSecond() {
-    	$users = array(array(), array(), );
-    	for ($wave = 2; $wave <= 5; $wave++) {
-    		$users[$wave] = array();
-    		for ($i = 1; $i <= $wave; $i++) {
-    			$token = $this->users->createUser("wave$wave$i@provider.com", "unknown", "wave$wave$i");
-    			$user = $this->users->retrieveUser($token);
-    			$this->users->putUserOnWave($user, $wave);
-    			array_push($users[$wave], $user);
-    		}
-    	}
-    	return $users;
+    	$this->assertContains(5, $availableWaves);
     }
     
     /**
@@ -252,9 +235,26 @@ class UsersTest extends PHPUnit_Framework_TestCase {
      * @expectedException        InvalidArgumentException
      * @expectedExceptionMessage Wave 1 is full
      */
-    public function cant_get_into_wave_where_all_users_are_already_in_place() {
+    public function cant_get_into_wave_where_all_users_on_first_wave_are_already_in_place() {
+    	$this->users->createUser("wave1@provider.com", "unkown", "wave");
+    	$this->users->createUser("wave2@provider.com", "unkown", "wave");
+    	$this->users->createUser("wave3@provider.com", "unkown", "wave");
+    	$this->users->createUser("wave4@provider.com", "unkown", "wave");
     	$this->users->putUserOnWave($this->users->retrieveUser("JKi7IbcSBQmA71jB"), 1);
-    	$this->users->putUserOnWave($this->users->retrieveUser($this->users->createUser("wave@provider.com", "unknown", "wave")), 1);
+    	$this->users->putUserOnWave($this->users->retrieveUser($this->users->createUser("wave5@provider.com", "unknown", "wave")), 1);
+    	$this->users->putUserOnWave($this->users->retrieveUser($this->users->createUser("wave6@provider.com", "unknown", "wave")), 1);
+    }
+    
+    /**
+     * @test
+     * @expectedException        InvalidArgumentException
+     * @expectedExceptionMessage Wave 2 is full
+     */
+    public function cant_get_into_wave_where_all_users_on_all_waves_are_already_in_place() {
+    	$this->users->putUserOnWave($this->users->retrieveUser($this->users->createUser("wave1@provider.com", "unknown", "wave")), 2);
+    	$this->users->putUserOnWave($this->users->retrieveUser($this->users->createUser("wave2@provider.com", "unknown", "wave")), 2);
+    	$this->users->putUserOnWave($this->users->retrieveUser($this->users->createUser("wave3@provider.com", "unknown", "wave")), 2);
+    	$this->users->putUserOnWave($this->users->retrieveUser($this->users->createUser("wave4@provider.com", "unknown", "wave")), 2);
     }
     
 }
