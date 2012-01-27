@@ -1,5 +1,4 @@
 <div id="warning">
-  <img src="images/kablam_Party_Animal.png" />
   <p>Pour une surprise réussie, ce site doit rester secret...<br />
   <strong>Ne la communiquez ni à Camille, ni à Laurent !</strong></p>
 </div>
