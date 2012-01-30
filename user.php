@@ -22,14 +22,14 @@ if (isset($_POST["action"])) {
 			$returnScript = "add-a-friend";
 			$newToken = $users->createUser($_POST["email"], $_POST["weddingLink"], $_POST["name"]);
 			if (mail(
-				$_POST["name"] . "<" . $_POST["email"] . ">",
-				$user->getName() . " vous a invité à participer au flashmob secret du mariage de Laurent & Camille",
+				imap_8bit_and_encoding($_POST["name"]) . " <" . $_POST["email"] . ">",
+				imap_8bit_and_encoding($user->getName() . " vous a invité à participer au flashmob secret du mariage de Laurent & Camille"),
 				"Vous recevez ce message car " . $user->getName() . " vous a invité à participer au flashmob SECRET du mariage de Laurent & Camille\n" .
 				"Pour avoir plus de détails et pour pouvoir vous entraîner, il vous suffit de cliquer sur le lien ci-dessous :\n" .
 				getRealURL() . "/index.php?token=" . $newToken . "\n\n" .
 				"ATTENTION : ce lien vous est uniquement destiné et ne doit pas être communiqué à quiconque, et surtout pas à Camille & Laurent",
-				"From: " . $user->getName() . " <" . $user->getEmail() . ">\r\n" .
-				"Bcc: Sébastian Le Merdy <sebastian.lemerdy@gmail.com>\r\n"
+				"From: " . imap_8bit_and_encoding($user->getName()) . " <" . $user->getEmail() . ">\r\n" .
+				"Bcc: sebastian.lemerdy@gmail.com\r\n"
 			)) {
 				$_SESSION["infoMessage"] = "Un email a été envoyé à " . $_POST["name"] . ".";
 			} else {

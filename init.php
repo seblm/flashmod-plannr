@@ -7,6 +7,7 @@ require_once("lib/Smarty-2.6.26/Smarty.class.php");
 function unauthorize($smarty) {
 	header("HTTP/1.1 401 Unauthorized");
 	$smarty->display("unauthorized.tpl");
+	$_SESSION = array();
 	exit;
 }
 
@@ -18,6 +19,10 @@ function getRealURL() {
 	$lastPositionOfSlash = strrpos($_SERVER["SCRIPT_NAME"], '/');
 	$url .= substr($_SERVER["SCRIPT_NAME"], 0, $lastPositionOfSlash);
 	return $url;
+}
+
+function imap_8bit_and_encoding(string $string) {
+	return "=?iso-8859-1?Q?" . str_replace('%', '=', rawurlencode(utf8_decode($string))) . "?=";
 }
 
 date_default_timezone_set("Europe/Paris");

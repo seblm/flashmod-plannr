@@ -62,6 +62,32 @@ class UsersTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * @test
 	 * @expectedException        InvalidArgumentException
+	 * @expectedExceptionMessage Email is unknown
+	 */
+	public function should_not_retrieve_user_and_token_by_inexisting_email() {
+		$this->users->retrieveUserAndTokenByEmail("inexistant");
+	}
+	
+	/**
+	 * @test
+	 */
+	public function should_retrieve_existing_user_and_token_by_email() {
+		$userAndToken = $this->users->retrieveUserAndTokenByEmail("sebastian.lemerdy@gmail.com");
+		
+		$this->assertNotNull($userAndToken);
+		$this->assertCount(2, $userAndToken);
+		$this->assertNotNull($userAndToken["user"]);
+		$this->assertEquals("sebastian.lemerdy@gmail.com", $userAndToken["user"]->getEmail());
+		$this->assertEquals("Frère de Laurent", $userAndToken["user"]->getWeddingLink());
+		$this->assertEquals("Sébastian", $userAndToken["user"]->getName());
+		$this->assertNull($userAndToken["user"]->getWave());
+		$this->assertNotNull($userAndToken["token"]);
+		$this->assertEquals("JKi7IbcSBQmA71jB", $userAndToken["token"]);
+	}
+	
+	/**
+	 * @test
+	 * @expectedException        InvalidArgumentException
 	 * @expectedExceptionMessage Email already exists
 	 */
 	public function cant_creates_new_user_with_existing_email() {

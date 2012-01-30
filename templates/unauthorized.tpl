@@ -19,14 +19,24 @@
 
 {/literal}</script>
 </head>
-<body>
+<body class="body2">
 <section>
 <div id="header" class="container">
 <header id="logo"><h1>Non authorisé</h1></header>
 </div>
 <article>
 <div id="page">
-<div id="box1"><span style="color: red;">Vous n'êtes pas autorisé à consulter ce site web.</span>
+<div id="box1">
+ <p style="color: red;">Vous n'êtes pas autorisé à consulter ce site web.</p>
+ {if (isset($smarty.session.infoMessage ))}<p style="color: green">{$smarty.session.infoMessage }</p>{
+  else}
+ <p>Si vous avez perdu le message contenant votre adresse personnalisée au site, vous pouvez vous la faire renvoyer en nous précisant votre adresse email.</p>
+ {if (isset($smarty.session.errorMessage))}<p style="color: red"  >{$smarty.session.errorMessage}</p>{/if}
+ <form method="post" action="forgot_url.php">
+  <span class="field" style="color: lightgrey;">email</span> <input type="text" name="email"/><br><br>
+  <input type="submit" value="Renvoyez-moi mon adresse personnalisée" class="css3button"/>
+ </form>
+ {/if}
 </div>
 </div>
 </article>

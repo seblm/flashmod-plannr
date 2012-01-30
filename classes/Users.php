@@ -22,6 +22,16 @@ class Users {
 		return $this->users[$token];
 	}
 	
+	public function retrieveUserAndTokenByEmail($email) {
+		if ($this->users !== null && !empty($this->users)) {
+			$userAndToken = $this->getUserAndTokenByEmail($email);
+			if ($userAndToken === null) {
+				throw new InvalidArgumentException("Email is unknown");
+			}
+			return $userAndToken;
+		}
+	}
+	
 	public function createUser($email, $weddingLink, $name) {
 		$token = $this->generatesToken();
 		if ($this->users != null) {
@@ -133,7 +143,7 @@ class Users {
 	
 	private function checkExistingUser($email) {
 		if ($this->users !== null && !empty($this->users)) {
-			if ($this->getUserByEmail($email) !== null) {
+			if ($this->getUserAndTokenByEmail($email) !== null) {
 				throw new InvalidArgumentException("Email already exists");
 			}
 		}	
@@ -154,10 +164,13 @@ class Users {
 		}
 	}
 	
-	private function getUserByEmail($email) {
+	private function getUserAndTokenByEmail($email) {
 		foreach ($this->users as $token => $user) {
-			if ($user->getEmail() == $email) {
-				return $user;
+			if ($user->getEmail() === $email) {
+				return array(
+					"token" => $token,
+					"user" => $user,
+				);
 			}
 		}
 	}

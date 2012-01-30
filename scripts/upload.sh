@@ -28,7 +28,6 @@ binary
 put img01.jpg
 put img02.jpg
 put img09.jpg
-put kablam_Party_Animal.png
 put splash.jpg
 put wave.png
 put wave1.png
