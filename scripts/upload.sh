@@ -9,6 +9,7 @@ cd flashmob
 ascii
 put add-a-friend.php
 put finish.php
+put forgot_url.php
 put index.php
 put init.php
 put inscription.php
