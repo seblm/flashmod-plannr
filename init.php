@@ -21,7 +21,7 @@ function getRealURL() {
 	return $url;
 }
 
-function imap_8bit_and_encoding(string $string) {
+function imap_8bit_and_encoding($string) {
 	return "=?iso-8859-1?Q?" . str_replace('%', '=', rawurlencode(utf8_decode($string))) . "?=";
 }
 
