@@ -3,7 +3,7 @@
 <head>
 <meta charset=utf-8 />
 <meta name="viewport" content="width=620" />
-<link href="style.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" media="screen" />
 <title>Site web à accès restrein</title>
 <script type="text/javascript">{literal}
 
@@ -22,7 +22,7 @@
 <body class="body2">
 <section>
 <div id="header" class="container">
-<header id="logo"><h1>Non authorisé</h1></header>
+<header id="logo"><h1>Non autorisé</h1></header>
 </div>
 <article>
 <div id="page">
