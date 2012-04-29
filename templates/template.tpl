@@ -26,21 +26,19 @@
   <div class="navbar-inner">
     <div class="container">
       <a class="brand" href="index.php?token={$smarty.get.token}">Flashmob mariage</a>
-      <div class="nav-collapse collapse">
-        <ul class="nav">
-          <li{if $currentPage == 'index'} class="active"{/if}><a href="{if $currentPage == 'index'}#{else}index.php?token={$smarty.get.token}{/if}">Présentation</a></li>
-          <li class="divider-vertical"></li>
-          <li class="dropdown{if $currentPage == 'video' || $currentPage == 'inscription'} active{/if}">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Vidéo <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li{if $currentPage == 'video'} class="active"{/if}><a href="{if $currentPage == 'video'}#{else}video.php?token={$smarty.get.token}{/if}">Entrainement</a></li>
-              <li{if $currentPage == 'inscription'} class="active"{/if}><a href="{if $currentPage == 'inscription' }#{else}inscription.php?token={$smarty.get.token}{/if}">Inscription</a></li>
-            </ul>
-          </li>
-          <li class="divider-vertical"></li>
-          <li{if $currentPage == 'add-a-friend'} class="active"{/if}><a href="{if $currentPage == 'add-a-friend'}#{else}add-a-friend.php?token={$smarty.get.token}{/if}">Ajouter un ami</a></li>
-        </ul>
-      </div>
+      <ul class="nav">
+        <li{if $currentPage == 'index'} class="active"{/if}><a href="{if $currentPage == 'index'}#{else}index.php?token={$smarty.get.token}{/if}">Présentation</a></li>
+        <li class="divider-vertical"></li>
+        <li class="dropdown{if $currentPage == 'video' || $currentPage == 'inscription'} active{/if}">
+          <a href="#" class="dropdown-toggle{if $currentPage == 'video' || $currentPage == 'inscription'} active{/if}" data-toggle="dropdown">Vidéo <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li{if $currentPage == 'video'} class="active"{/if}><a href="{if $currentPage == 'video'}#{else}video.php?token={$smarty.get.token}{/if}">Entrainement</a></li>
+            <li{if $currentPage == 'inscription'} class="active"{/if}><a href="{if $currentPage == 'inscription' }#{else}inscription.php?token={$smarty.get.token}{/if}">Inscription</a></li>
+          </ul>
+        </li>
+        <li class="divider-vertical"></li>
+        <li{if $currentPage == 'add-a-friend'} class="active"{/if}><a href="{if $currentPage == 'add-a-friend'}#{else}add-a-friend.php?token={$smarty.get.token}{/if}">Ajouter un ami</a></li>
+      </ul>
     </div>
   </div>
 </div>
