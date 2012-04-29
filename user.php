@@ -7,16 +7,14 @@ $returnScript = "inscription";
 if (isset($_POST["action"])) {
 	$action = $_POST["action"];
 	try {
-		if ($action == "updateWave") {
+		if ($action == "udpateUser") {
+			$user->setName($_POST["name"])->setWeddingLink($_POST["weddingLink"]);
 			$wave = $_POST["wave"];
 			if (strlen($_POST["wave"]) == 0) {
 				$users->removeUserFromWaves($user);
 			} else {
 				$users->putUserOnWave($user, $wave);
 			}
-			$users->saveUsers();
-		} elseif ($action == "Mettre à jour mes informations") {
-			$user->setName($_POST["name"])->setWeddingLink($_POST["weddingLink"]);
 			$users->saveUsers();
 		} elseif ($action == "Inviter") {
 			$returnScript = "add-a-friend";

@@ -2,10 +2,12 @@
 <html id="home" lang="fr">
 <head>
 <meta charset=utf-8 />
-<meta name="viewport" content="width=620" />
-<link href="style.css" rel="stylesheet" type="text/css" media="screen" />
+<link rel="stylesheet" href="bootstrap/css/bootstrap.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="style.css" type="text/css" media="screen" />
 <title>Flashmob pour le mariage de Camille &amp; Laurent - {$title}</title>
-<script type="text/javascript">{literal}
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+<!-- <script type="text/javascript">{literal}
 
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-6197811-3']);
@@ -17,33 +19,35 @@
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 
-{/literal}</script>
+{/literal}</script> -->
 </head>
 <body{if $currentPage != 'index'} class="body2"{/if}>
-<div id="ribbon">
- <span>Confidentiel</span>
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.php?token={$smarty.get.token}">Flashmob mariage</a>
+      <div class="nav-collapse collapse">
+        <ul class="nav">
+          <li{if $currentPage == 'index'} class="active"{/if}><a href="{if $currentPage == 'index'}#{else}index.php?token={$smarty.get.token}{/if}">Présentation</a></li>
+          <li class="divider-vertical"></li>
+          <li class="dropdown{if $currentPage == 'video' || $currentPage == 'inscription'} active{/if}">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Vidéo <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li{if $currentPage == 'video'} class="active"{/if}><a href="{if $currentPage == 'video'}#{else}video.php?token={$smarty.get.token}{/if}">Entrainement</a></li>
+              <li{if $currentPage == 'inscription'} class="active"{/if}><a href="{if $currentPage == 'inscription' }#{else}inscription.php?token={$smarty.get.token}{/if}">Inscription</a></li>
+            </ul>
+          </li>
+          <li class="divider-vertical"></li>
+          <li{if $currentPage == 'add-a-friend'} class="active"{/if}><a href="{if $currentPage == 'add-a-friend'}#{else}add-a-friend.php?token={$smarty.get.token}{/if}">Ajouter un ami</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>
-<section>
-<div id="header" class="container">
-<header id="logo"><h1><a href="http://fr.wikipedia.org/wiki/Flash_mob">Flashmob</a> mariage</h1></header>
-</div>
-<div id="menu">
-<ul>
-<li{if $currentPage == 'index'       } class="current_page_item"{/if}><a href="{if $currentPage == 'index'       }#{else}index.php?token={       $smarty.get.token}{/if}">Présentation</a></li>
-<li{if $currentPage == 'video'       } class="current_page_item"{/if}><a href="{if $currentPage == 'video'       }#{else}video.php?token={       $smarty.get.token}{/if}">Vidéo</a></li>
-<li{if $currentPage == 'inscription' } class="current_page_item"{/if}><a href="{if $currentPage == 'inscription' }#{else}inscription.php?token={ $smarty.get.token}{/if}">Inscription</a></li>
-<li{if $currentPage == 'add-a-friend'} class="current_page_item"{/if}><a href="{if $currentPage == 'add-a-friend'}#{else}add-a-friend.php?token={$smarty.get.token}{/if}">Ajouter un ami</a></li>
-</ul>
-</div>
-<article>
-{if $currentPage == 'index' }<div id="splash"><img src="images/splash.jpg" width="800" height="250" alt="" /></div>{/if}
-<div id="page">
-<div id="box1">
+<div class="container">
+  <!-- <div id="ribbon"><span>Confidentiel</span></div> -->
 {include file="$currentPage.tpl"}
+  <footer class="footer"><p>Contacter <a href="mailto:sebastian.lemerdy@gmail.com">Sébastian</a> pour toute question supplémentaire</p></footer>
 </div>
-</div>
-</article>
-<footer id="footer"><p>Contacter <a href="mailto:sebastian.lemerdy@gmail.com">Sébastian</a> pour toute question supplémentaire</p></footer>
-</section>
 </body>
 </html>
