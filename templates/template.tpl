@@ -7,7 +7,7 @@
 <title>Flashmob pour le mariage de Camille &amp; Laurent - {$title}</title>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
-<!-- <script type="text/javascript">{literal}
+<script type="text/javascript">{literal}
 
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-6197811-3']);
@@ -19,7 +19,7 @@
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 
-{/literal}</script> -->
+{/literal}</script>
 </head>
 <body{if $currentPage != 'index'} class="body2"{/if}>
 <div class="navbar navbar-fixed-top">
