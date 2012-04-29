@@ -7,7 +7,7 @@ $returnScript = "inscription";
 if (isset($_POST["action"])) {
 	$action = $_POST["action"];
 	try {
-		if ($action == "udpateUser") {
+		if ($action == "update") {
 			$user->setName($_POST["name"])->setWeddingLink($_POST["weddingLink"]);
 			$wave = $_POST["wave"];
 			if (strlen($_POST["wave"]) == 0) {
@@ -16,7 +16,8 @@ if (isset($_POST["action"])) {
 				$users->putUserOnWave($user, $wave);
 			}
 			$users->saveUsers();
-		} elseif ($action == "Inviter") {
+			$returnScript = "video";
+		} elseif ($action == "invite") {
 			$returnScript = "add-a-friend";
 			$newToken = $users->createUser($_POST["email"], $_POST["weddingLink"], $_POST["name"]);
 			if (mail(
