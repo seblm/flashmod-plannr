@@ -31,6 +31,7 @@
   elseif $wave == 5}3 minutes et 15 secondes{
   else                           }0 seconde{
       /if} du début.</p>
+    <p>Si vous souhaitez changer de vague, vous devez retourner dans le menu Inscription. Cliquez alors sur la vague désirée et valider à nouveau.</p>
   </div>{/if}
 </section>
 
