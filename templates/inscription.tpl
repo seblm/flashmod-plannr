@@ -11,7 +11,7 @@
   <div class="page-header"><h1>Mon compte</h1></div>
   <form method="post" action="user.php" class="form-horizontal">
     <input type="hidden" name="token" value="{$smarty.get.token}"/>
-    <input type="hidden" name="action" value="udpateUser"/>
+    <input type="hidden" name="action" value="update"/>
     <div class="control-group">
       <label class="control-label" for="name">nom, prénom ou pseudo</label>
       <div class="controls"><input type="text" name="name" value="{user->getName}" id="name"></div>
@@ -28,7 +28,7 @@
       </div>
     </div>
     {if (isset($smarty.session.errorMessage))}<span class="field" style="color: red">{$smarty.session.errorMessage}</span><br>{/if}
-    <p>La chorégraphie comprend 5 vagues. Vous pouvez les visualiser ci-dessous.
+    <p>La chorégraphie comprend 5 vagues. Vous pouvez les visualiser ci-dessous.<br>
     Cliquer sur la vague choisie puis valider votre inscription.</p>
     {user->getWave assign="wave"}
     <input type="hidden" name="wave" value="{$wave}" id="wave"/>
@@ -41,26 +41,26 @@
       <a style="                                               cursor: pointer;      display: block; width: 102px; height: 79px; float: left;" title="aucune vague"                                            onmouseover="document.getElementById('waves').style.backgroundImage = 'url(images/wave.png)'; " onclick="document.getElementById('wave').value = null;"  ></a>
     </div>
     <div style="float: left; width: 115px; background-color: #363636; padding-left: 5px;">
-      0:04{foreach from=$userNamesByWave item=userNames name=userNames}{if $smarty.foreach.userNames.index == 1                                        }{foreach from=$userNames item=name}<br>{$name}{/foreach}{/if}{/foreach}
+      <span class="wave">vague 1<br>0:04</span>{foreach from=$userNamesByWave item=userNames name=userNames}{if $smarty.foreach.userNames.index == 1                                        }{foreach from=$userNames item=name}<br>{$name}{/foreach}{/if}{/foreach}
     </div>
     <div style="float: left; width: 112px; background-color: #363636">
-      0:32{foreach from=$userNamesByWave item=userNames name=userNames}{if $smarty.foreach.userNames.index >= 1 && $smarty.foreach.userNames.index <= 2}{foreach from=$userNames item=name}<br>{$name}{/foreach}{/if}{/foreach}
+      <span class="wave">vague 2<br>0:32</span>{foreach from=$userNamesByWave item=userNames name=userNames}{if $smarty.foreach.userNames.index >= 1 && $smarty.foreach.userNames.index <= 2}{foreach from=$userNames item=name}<br>{$name}{/foreach}{/if}{/foreach}
     </div>
     <div style="float: left; width: 112px; background-color: #363636">
-      1:01{foreach from=$userNamesByWave item=userNames name=userNames}{if $smarty.foreach.userNames.index >= 1 && $smarty.foreach.userNames.index <= 3}{foreach from=$userNames item=name}<br>{$name}{/foreach}{/if}{/foreach}
+      <span class="wave">vague 3<br>1:01</span>{foreach from=$userNamesByWave item=userNames name=userNames}{if $smarty.foreach.userNames.index >= 1 && $smarty.foreach.userNames.index <= 3}{foreach from=$userNames item=name}<br>{$name}{/foreach}{/if}{/foreach}
     </div>
     <div style="float: left; width: 112px; background-color: #363636">
-      1:46{foreach from=$userNamesByWave item=userNames name=userNames}{if $smarty.foreach.userNames.index >= 1 && $smarty.foreach.userNames.index <= 4}{foreach from=$userNames item=name}<br>{$name}{/foreach}{/if}{/foreach}
+      <span class="wave">vague 4<br>1:46</span>{foreach from=$userNamesByWave item=userNames name=userNames}{if $smarty.foreach.userNames.index >= 1 && $smarty.foreach.userNames.index <= 4}{foreach from=$userNames item=name}<br>{$name}{/foreach}{/if}{/foreach}
     </div>
     <div style="float: left; width: 117px; background-color: #363636">
-      2:35{foreach from=$userNamesByWave item=userNames name=userNames}{if $smarty.foreach.userNames.index >= 1 && $smarty.foreach.userNames.index <= 5}{foreach from=$userNames item=name}<br>{$name}{/foreach}{/if}{/foreach}
+      <span class="wave">vague 5<br>2:35</span>{foreach from=$userNamesByWave item=userNames name=userNames}{if $smarty.foreach.userNames.index >= 1 && $smarty.foreach.userNames.index <= 5}{foreach from=$userNames item=name}<br>{$name}{/foreach}{/if}{/foreach}
     </div>
     <div style="float: left; width: 102px; background-color: #363636">
-      4:06{foreach from=$userNamesByWave item=userNames name=userNames}{if $smarty.foreach.userNames.index == 0                                        }{foreach from=$userNames item=name}<br>{$name}{/foreach}{/if}{/foreach}
+      <span class="wave">non inscrits<br>4:06</span>{foreach from=$userNamesByWave item=userNames name=userNames}{if $smarty.foreach.userNames.index == 0                                        }{foreach from=$userNames item=name}<br>{$name}{/foreach}{/if}{/foreach}
     </div>
     <p style="clear: both;">&nbsp;</p>
     <div class=form-actions>
-      <button type="submit" class="btn btn-primary">Mettre à jour mes informations</button>
+      <button type="submit" class="btn btn-primary">Valider mon inscription</button>
     </div>
   </form>
 </section>
