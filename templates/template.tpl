@@ -29,7 +29,7 @@
       <ul class="nav">
         <li{if $currentPage == 'index'} class="active"{/if}><a href="{if $currentPage == 'index'}#{else}index.php?token={$smarty.get.token}{/if}">Présentation</a></li>
         <li class="divider-vertical"></li>
-        <li class="dropdown{if $currentPage == 'video' || $currentPage == 'inscription'} active{/if}">
+        <li class="dropdown{if $currentPage == 'video' || $currentPage == 'inscription'} active{/if}">
           <a href="#" class="dropdown-toggle{if $currentPage == 'video' || $currentPage == 'inscription'} active{/if}" data-toggle="dropdown">Vidéo <b class="caret"></b></a>
           <ul class="dropdown-menu">
             <li{if $currentPage == 'video'} class="active"{/if}><a href="{if $currentPage == 'video'}#{else}video.php?token={$smarty.get.token}{/if}">Entrainement</a></li>
@@ -43,7 +43,7 @@
   </div>
 </div>
 <div class="container">
-  <!-- <div id="ribbon"><span>Confidentiel</span></div> -->
+  <div id="ribbon"><span>Confidentiel</span></div>
 {include file="$currentPage.tpl"}
   <footer class="footer"><p>Contacter <a href="mailto:sebastian.lemerdy@gmail.com">Sébastian</a> pour toute question supplémentaire</p></footer>
 </div>
