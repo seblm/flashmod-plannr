@@ -19,7 +19,7 @@ function imap_8bit_and_encoding($string) {
 
 if (array_key_exists("email", $_POST)) {
 	session_start();
-	$users = new Users();
+	$users = new Users(new PDO("sqlite:" . __DIR__ . "/data/flashmob.sqlite"));
 	try {
 		$userAndToken = $users->retrieveUserAndTokenByEmail($_POST["email"]);
 		if (mail(

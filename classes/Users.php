@@ -12,8 +12,11 @@ class Users {
 	public static $ADMIN_TOKEN = "JKi7IbcSBQmA71jB";
 	
 	private $users;
+	
+	private $db;
 
-	public function Users() {
+    public function Users($db) {
+		$this->db = $db;
 		$this->loadUsers();
 	}
 	
@@ -54,10 +57,23 @@ class Users {
 	}
 	
 	public function saveUsers() {
-		$serialized = serialize($this->users);
-		$handle = Users::openFile(false);
-		fwrite($handle, $serialized);
-		fclose($handle);
+		try {
+			$this->db->beginTransaction();
+			$this->db->exec("DELETE FROM users");
+			$statement = $this->db->prepare("INSERT INTO users VALUES (:token, :name, :email, :weddingLink, :wave)");
+			foreach ($this->users as $token => $user) {
+				$statement->execute(array(
+						':token' => $token,
+						':name' => $user->getName(),
+						':email' => $user->getEmail(),
+						':weddingLink' => $user->getWeddingLink(),
+						':wave' => $user->getWave()
+				));
+			}
+			$this->db->commit();
+		} catch (PDOException $e) {
+			$this->db->rollback();
+		}
 		return $this;
 	}
 	
@@ -124,14 +140,25 @@ class Users {
 	}
 	
 	private function loadUsers() {
-		if (is_file(Users::getFileName())) {
-			$handle = Users::openFile();
-			$serialized = fread($handle, 100000);
-			fclose($handle);
-			$this->users = unserialize($serialized);
-		} else {
-			$this->users = array(Users::$ADMIN_TOKEN => new User("sebastian.lemerdy@gmail.com", "Frère de Laurent", "Sébastian"));
-			$this->saveUsers();
+		$this->users = array();
+		try {
+			$this->db->exec("CREATE TABLE IF NOT EXISTS users (" .
+					"token TEXT PRIMARY KEY, " .
+					"name TEXT NOT NULL, " .
+					"email TEXT UNIQUE NOT NULL, " .
+					"weddingLink TEXT NOT NULL, " .
+					"wave INTEGER DEFAULT NULL)");
+			foreach ($this->db->query("SELECT * FROM users") as $row) {
+				$this->users[$row["token"]] = new User($row["email"], $row["weddingLink"], $row["name"]);
+				if (isset($row["wave"])) {
+					$this->putUserOnWave($this->users[$row["token"]], $row["wave"]);
+				}
+			}
+			if (count($this->users) == 0) {
+				$this->users[Users::$ADMIN_TOKEN] = new User("sebastian.lemerdy@gmail.com", "Frère de Laurent", "Sébastian");
+				$this->saveUsers();
+			}
+		} catch (PDOException $e) {
 		}
 	}
 	
@@ -177,20 +204,6 @@ class Users {
 	
 	private function generatesToken() {
 		return substr(str_shuffle(str_repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789", 16)), 0, 16);
-	}
-	
-	private static function openFile($readOnly = true) {
-		if ($readOnly) {
-			return fopen(Users::getFileName(), "r");
-		}
-		return fopen(Users::getFileName(), "w");
-	}
-	
-	private static function getFileName() {
-		if (defined("TEST")) {
-			return "data/users-test";
-		}
-		return "data/users";
 	}
 	
 }

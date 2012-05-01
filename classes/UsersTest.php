@@ -7,17 +7,11 @@ class UsersTest extends PHPUnit_Framework_TestCase {
 	
 	private $users;
 	
-	public function setUp() {
-		if (!defined("TEST")) {
-			define("TEST", true);
-		}
-		$this->users = new Users();
-	}
+	private $db;
 	
-	public function tearDown() {
-		if (is_file("data/users-test")) {
-			unlink("data/users-test");
-		}
+	public function setUp() {
+		$this->db = new PDO("sqlite::memory:");
+		$this->users = new Users($this->db);
 	}
 	
 	/**
@@ -129,7 +123,7 @@ class UsersTest extends PHPUnit_Framework_TestCase {
     	$this->users->putUserOnWave($user, 1);
     	
     	$this->users->saveUsers();
-        $this->users = new Users();
+        $this->users = new Users($this->db);
         
     	$user = $this->users->retrieveUser("JKi7IbcSBQmA71jB");
         $this->assertEquals("sebastian.lemerdy@gmail.com", $user->getEmail());
@@ -145,7 +139,7 @@ class UsersTest extends PHPUnit_Framework_TestCase {
     	$token = $this->users->createUser("new-user@provider.com", "wedlink", "myname");
     	
     	$this->users->saveUsers();
-    	$this->users = new Users();
+    	$this->users = new Users($this->db);
     	
     	$this->assertTrue($token != "JKi7IbcSBQmA71jB", "A new token must have been generated.");
     	$this->assertRegExp("/[a-zA-Z0-9]{16}/", $token);

@@ -1,5 +1,5 @@
 .DS_Store
 .project
 .buildpath
-data/users-*
+data/flashmob.sqlite
 .settings/
