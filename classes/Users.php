@@ -142,12 +142,16 @@ class Users {
 	private function loadUsers() {
 		$this->users = array();
 		try {
-			$this->db->exec("CREATE TABLE IF NOT EXISTS users (" .
-					"token TEXT PRIMARY KEY, " .
-					"name TEXT NOT NULL, " .
-					"email TEXT UNIQUE NOT NULL, " .
-					"weddingLink TEXT NOT NULL, " .
-					"wave INTEGER DEFAULT NULL)");
+			$statement = $this->db->query("SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='users'");
+			$result = $statement->fetch();
+			if ($result[0] == 0) {
+				$this->db->exec("CREATE TABLE users (" .
+						"token TEXT PRIMARY KEY, " .
+						"name TEXT NOT NULL, " .
+						"email TEXT UNIQUE NOT NULL, " .
+						"weddingLink TEXT NOT NULL, " .
+						"wave INTEGER DEFAULT NULL)");
+			}
 			foreach ($this->db->query("SELECT * FROM users") as $row) {
 				$this->users[$row["token"]] = new User($row["email"], $row["weddingLink"], $row["name"]);
 				if (isset($row["wave"])) {
