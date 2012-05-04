@@ -29,7 +29,7 @@ date_default_timezone_set("Europe/Paris");
 session_start();
 
 $smarty = new Smarty();
-$users = new Users(new PDO("sqlite:" . __DIR__ . "/data/flashmob.sqlite"));
+$users = new Users(new PDO("sqlite:" . dirname(__FILE__) . "/data/flashmob.sqlite"));
 $token = "";
 if (array_key_exists("token", $_GET)) {
 	$token = $_GET["token"];
