@@ -2,6 +2,7 @@
 
 require_once("classes/Users.php");
 require_once("classes/User.php");
+require_once("classes/Logger.php");
 require_once("lib/Smarty-2.6.26/Smarty.class.php");
 
 function unauthorize($smarty) {
@@ -29,7 +30,8 @@ date_default_timezone_set("Europe/Paris");
 session_start();
 
 $smarty = new Smarty();
-$users = new Users(new PDO("sqlite:" . dirname(__FILE__) . "/data/flashmob.sqlite"));
+$db = new PDO("sqlite:" . dirname(__FILE__) . "/data/flashmob.sqlite");
+$users = new Users($db);
 $token = "";
 if (array_key_exists("token", $_GET)) {
 	$token = $_GET["token"];
@@ -42,6 +44,8 @@ try {
 } catch (InvalidArgumentException $e) {
 	unauthorize($smarty);
 }
+
+Logger::log($user, $db);
 
 $smarty->register_object("user", $user);
 

@@ -29,6 +29,7 @@ put bootstrap.min.js
 mkdir ../../classes
 cd ../../classes
 lcd ../../classes
+put Logger.php
 put User.php
 put Users.php
 mkdir ../data
