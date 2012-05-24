@@ -1,6 +1,7 @@
 <?php
 
 require_once("classes/Logger.php");
+require_once("classes/Users.php");
 
 class LoggerTest extends PHPUnit_Framework_TestCase {
 	
@@ -61,6 +62,19 @@ class LoggerTest extends PHPUnit_Framework_TestCase {
 
 		$result = $statement->fetch();
 		$this->assertEquals(1, $result["count"]);
+		$statement->closeCursor();
+	}
+	
+	/**
+	 * @test
+	 */
+	public function should_not_log_for_admin() {
+		$this->user = new User(Users::$ADMIN_EMAIL, "weddingLink", "name");
+		Logger::log($this->user, $this->db);
+		
+		$statement = $this->db->query("SELECT COUNT(*) AS count FROM access_log");
+		$row = $statement->fetch();
+		$this->assertEquals(0, $row["count"]);
 		$statement->closeCursor();
 	}
 	
