@@ -28,7 +28,7 @@ if (isset($_POST["action"])) {
 				getRealURL() . "/index.php?token=" . $newToken . "\n\n" .
 				"ATTENTION : ce lien vous est uniquement destiné et ne doit pas être communiqué à quiconque, et surtout pas à Camille & Laurent",
 				"From: " . imap_8bit_and_encoding($user->getName()) . " <" . $user->getEmail() . ">\r\n" .
-				"Bcc: sebastian.lemerdy@gmail.com\r\n"
+				"Bcc: " . Users::$ADMIN_EMAIL . "\r\n"
 			)) {
 				$_SESSION["infoMessage"] = "Un email a été envoyé à " . $_POST["name"] . ".";
 			} else {

@@ -10,6 +10,7 @@ class Users {
 		"camille_preco@hotmail.com",
 	);
 	public static $ADMIN_TOKEN = "JKi7IbcSBQmA71jB";
+	public static $ADMIN_EMAIL = "sebastian.lemerdy@gmail.com";
 	
 	private $users;
 	
@@ -159,7 +160,7 @@ class Users {
 				}
 			}
 			if (count($this->users) == 0) {
-				$this->users[Users::$ADMIN_TOKEN] = new User("sebastian.lemerdy@gmail.com", "Frère de Laurent", "Sébastian");
+				$this->users[Users::$ADMIN_TOKEN] = new User(Users::$ADMIN_EMAIL, "Frère de Laurent", "Sébastian");
 				$this->saveUsers();
 			}
 		} catch (PDOException $e) {

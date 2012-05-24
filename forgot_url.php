@@ -29,8 +29,8 @@ if (array_key_exists("email", $_POST)) {
 				"Vous pouvez accéder au site en cliquant sur le lien ci-dessous :\n" .
 				getRealURL() . "/index.php?token=" . $userAndToken["token"] . "\n\n" .
 				"ATTENTION : ce lien vous est uniquement destiné et ne doit pas être communiqué à quiconque, et surtout pas à Camille & Laurent",
-				"From: " . imap_8bit_and_encoding("Sébastian Le Merdy") . " <sebastian.lemerdy@gmail.com>\r\n" .
-				"Bcc: sebastian.lemerdy@gmail.com\r\n"
+				"From: " . imap_8bit_and_encoding("Sébastian Le Merdy") . " <" . Users::$ADMIN_EMAIL . ">\r\n" .
+				"Bcc: " . Users::$ADMIN_EMAIL . "\r\n"
 		)) {
 			$_SESSION["infoMessage"] = "Un email a été envoyé à " . $userAndToken["user"]->getName() . ".";
 		} else {
