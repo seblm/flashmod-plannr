@@ -37,6 +37,7 @@ mkdir ../images
 cd ../images
 lcd ../images
 binary
+put dvd.png
 put img01.jpg
 put img02.jpg
 put img09.jpg

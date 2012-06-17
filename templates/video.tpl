@@ -1,13 +1,20 @@
 {user->getWave assign='wave'}<section>
   <div class="page-header"><h1>Voici la video de la chorégraphie</h1></div>
-  <iframe width="560" height="315" src="http://www.youtube.com/embed/b4kXbdK9O3Y?rel=0&start={
-      if $wave == 1  }4{
-  elseif $wave == 2 }32{
-  elseif $wave == 3 }61{
-  elseif $wave == 4}106{
-  elseif $wave == 5}195{
-  else               }0{
-  /if}" frameborder="0" allowfullscreen></iframe>
+  <div class="row">
+    <div class="span8">
+      <iframe width="560" height="315" src="http://www.youtube.com/embed/b4kXbdK9O3Y?rel=0&start={
+          if $wave == 1  }4{
+      elseif $wave == 2 }32{
+      elseif $wave == 3 }61{
+      elseif $wave == 4}106{
+      elseif $wave == 5}195{
+      else               }0{
+      /if}" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <div class="span4">
+      <a href="http://dl.dropbox.com/u/32388305/flashmob%20mariage.iso"><img src="images/dvd.png"/><br>Télécharger le DVD<br>pour le graver<br>et s'entraîner dans son salon</a>
+    </div>
+  </div>
 </section>
 
 <section>
