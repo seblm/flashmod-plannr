@@ -41,6 +41,7 @@ put dvd.png
 put img01.jpg
 put img02.jpg
 put img09.jpg
+put miniature.png
 put splash.jpg
 put wave.png
 put wave1.png

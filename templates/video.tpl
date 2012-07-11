@@ -13,6 +13,10 @@
     </div>
     <div class="span4">
       <a href="http://dl.dropbox.com/u/32388305/flashmob%20mariage.iso"><img src="images/dvd.png"/><br>Télécharger le DVD<br>pour le graver<br>et s'entraîner dans son salon</a>
+      <p>
+      <p>
+      <p>
+      <a href="images/flashmob%20mariage.mp4"><img src="images/miniature.png"/><br>Télécharger la vidéo (37,7 Mo)<br>pour la visualiser<br>sans connexion internet</a>
     </div>
   </div>
 </section>
