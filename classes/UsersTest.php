@@ -90,33 +90,6 @@ class UsersTest extends PHPUnit_Framework_TestCase {
 	
     /**
      * @test
-     * @expectedException        InvalidArgumentException
-     * @expectedExceptionMessage Email is forbidden
-     */
-    public function cant_creates_new_user_with_forbidden_email_laurent() {
-    	$this->users->createUser("laurent.le-merdy@laposte.net", "Groom", "Laurent");
-    }
-
-    /**
-     * @test
-     * @expectedException        InvalidArgumentException
-     * @expectedExceptionMessage Email is forbidden
-     */
-    public function cant_creates_new_user_with_forbidden_email_laurent2() {
-    	$this->users->createUser("laurentlemerdy@hotmail.com", "Groom", "Laurent");
-    }
-    
-    /**
-     * @test
-     * @expectedException        InvalidArgumentException
-     * @expectedExceptionMessage Email is forbidden
-     */
-    public function cant_creates_new_user_with_forbidden_email_camille() {
-    	$this->users->createUser("camille_preco@hotmail.com", "Bride", "Camille");
-    }
-    
-    /**
-     * @test
      */
     public function should_save_user() {
     	$user = $this->users->retrieveUser("JKi7IbcSBQmA71jB")->setWeddingLink("Groom's big brother")->setName("Sébas.");

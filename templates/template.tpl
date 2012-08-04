@@ -27,7 +27,8 @@
     <div class="container">
       <a class="brand" href="index.php?token={$smarty.get.token}">Flashmob mariage</a>
       <ul class="nav">
-        <li{if $currentPage == 'index'} class="active"{/if}><a href="{if $currentPage == 'index'}#{else}index.php?token={$smarty.get.token}{/if}">Présentation</a></li>
+        <li{if $currentPage == 'index'}        class="active"{/if}><a href="{if $currentPage == 'index'       }#{else}index.php?token={$smarty.get.token}{/if}">La vidéo</a></li>
+        <li{if $currentPage == 'presentation'} class="active"{/if}><a href="{if $currentPage == 'presentation'}#{else}presentation.php?token={$smarty.get.token}{/if}">Présentation</a></li>
         <li class="divider-vertical"></li>
         <li class="dropdown{if $currentPage == 'video' || $currentPage == 'inscription'} active{/if}">
           <a href="#" class="dropdown-toggle{if $currentPage == 'video' || $currentPage == 'inscription'} active{/if}" data-toggle="dropdown">Vidéo <b class="caret"></b></a>

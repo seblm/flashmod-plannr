@@ -13,6 +13,7 @@ put forgot_url.php
 put index.php
 put init.php
 put inscription.php
+put presentation.php
 put style.css
 put user.php
 put video.php
@@ -56,6 +57,7 @@ ascii
 put add-a-friend.tpl
 put index.tpl
 put inscription.tpl
+put presentation.tpl
 put template.tpl
 put unauthorized.tpl
 put video.tpl

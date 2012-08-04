@@ -4,11 +4,6 @@ require_once("classes/User.php");
 
 class Users {
 	
-	private static $FORBIDDEN_EMAILS = array(
-		"laurent.le-merdy@laposte.net",
-		"laurentlemerdy@hotmail.com",
-		"camille_preco@hotmail.com",
-	);
 	public static $ADMIN_TOKEN = "JKi7IbcSBQmA71jB";
 	public static $ADMIN_EMAIL = "sebastian.lemerdy@gmail.com";
 	
@@ -79,7 +74,6 @@ class Users {
 	}
 	
 	public function checkNewEmail($email) {
-		$this->checkEmailForbidden($email);
 		$this->checkExistingUser($email);
 	}
 	
@@ -164,12 +158,6 @@ class Users {
 				$this->saveUsers();
 			}
 		} catch (PDOException $e) {
-		}
-	}
-	
-	private function checkEmailForbidden($email) {
-		if (in_array($email, Users::$FORBIDDEN_EMAILS)) {
-			throw new InvalidArgumentException("Email is forbidden");
 		}
 	}
 	
